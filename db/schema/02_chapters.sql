@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS chapters CASCADE;
+CREATE TABLE chapters (
+  id SERIAL PRIMARY KEY NOT NULL,
+  title VARCHAR(60),
+  body TEXT NOT NULL
+);

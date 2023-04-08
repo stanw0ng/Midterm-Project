@@ -1,13 +1,14 @@
 <%- include('partials/_header', {title: "Log In - Story Maker"}); %>
+<h2>Log In</h2>
 
 <main>
 
-  <form>
-    <label>Email Address</label>
-    <input type="email">
-    <label>Password</label>
-    <input type="password">
-    <button>Log In</button>
+  <form method="POST" action="/login">
+    <label for="email">Email Address</label>
+    <input type="email" name="email">
+    <label for="password">Password</label>
+    <input type="password" name="password" autofill="false">
+    <button type="submit">Log In</button>
   </form>
 
 </main>

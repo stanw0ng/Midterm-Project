@@ -21,12 +21,29 @@ router.post('/login', (req, res) => {
   const { email, password } = req.body;
   userQueries.getUserByEmail(email)
     .then((user) => {
+
+      if(!user) {
+        console.log("No such user");
+        return res.redirect('/login');
+      }
+
       if(password != user.password) {
         console.log("Password mismatch");
         return res.redirect('/login');
       }
       console.log("Login successful");
       res.redirect('/profile');
+    });
+});
+
+router.post('/register', (req, res) => {
+  userQueries.registerNewUser(req.body)
+    .then((user) => {
+      console.log("Registration successful", user);
+      res.redirect('/profile');
+    })
+    .catch((err) => {
+      res.redirect('/register');
     });
 });
 

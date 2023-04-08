@@ -8,8 +8,16 @@
 const express = require('express');
 const router  = express.Router();
 
-router.get('/', (req, res) => {
-  res.render('profile');
+router.use((req, res, next) => {
+  if(!req.session.userID) {
+    return res.redirect('/login');
+  }
+
+  next();
+})
+
+router.get('/profile', (req, res) => {
+  res.render('user_profile');
 });
 
 module.exports = router;

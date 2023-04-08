@@ -17,6 +17,11 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/logout', (req, res) => {
+  req.session = null;
+  res.redirect(`/login`);
+});
+
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
   userQueries.getUserByEmail(email)
@@ -32,7 +37,8 @@ router.post('/login', (req, res) => {
         return res.redirect('/login');
       }
       console.log("Login successful");
-      res.redirect('/profile');
+      req.session.userID = user.email;
+      res.redirect('/user/profile');
     });
 });
 
@@ -40,7 +46,8 @@ router.post('/register', (req, res) => {
   userQueries.registerNewUser(req.body)
     .then((user) => {
       console.log("Registration successful", user);
-      res.redirect('/profile');
+      req.session.userID = user.email;
+      res.redirect('/user/profile');
     })
     .catch((err) => {
       res.redirect('/register');

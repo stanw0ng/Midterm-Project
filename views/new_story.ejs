@@ -1,10 +1,40 @@
 <%- include('partials/_header', {title: "New Story - Story Maker"}); %>
+
 <h2>New Story</h2>
 
 <!-- This will be the page where the users will write their new story -->
 <form>
+
+  <label for="story-title">Story Title</label>
+  <input type="text" name="story-title">
+
+  <label for="description">Description</label>
+  <input type="text" name="description">
+
+  <label for="category">Category</label>
+  <select name="category">
+    <option value="prose">Free Prose</option>
+    <option value="poem">Poetry</option>
+    <option value="other">Other</option>
+  </select>
+
+  <label for="genre">Genre</label>
+  <select name="genre">
+    <option value="fiction">Fiction</option>
+    <option value="mystery">Mystery</option>
+    <option value="horror">Horror</option>
+    <option value="fantasy">Fantasy</option>
+    <option value="sci-fi">Science Fiction</option>
+    <option value="other">Other</option>
+  </select>
+
+  <label for="chapter-title">Chapter Title</label>
+  <input type="text" name="chapter-title">
+
   <%- include('partials/_text_editor') %>
+
   <button>Submit</button>
+
 </form>
 
 <%- include('partials/_footer'); %>

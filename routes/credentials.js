@@ -9,6 +9,8 @@ const express = require('express');
 const router  = express.Router();
 const userQueries = require('../db/queries/user-queries');
 
+const bcryptjs = require('bcryptjs');
+
 router.get('/register', (req, res) => {
   res.render('register');
 });
@@ -22,28 +24,11 @@ router.get('/logout', (req, res) => {
   res.redirect(`/login`);
 });
 
-router.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  userQueries.getUserByEmail(email)
-    .then((user) => {
-
-      if(!user) {
-        console.log("No such user");
-        return res.redirect('/login');
-      }
-
-      if(password != user.password) {
-        console.log("Password mismatch");
-        return res.redirect('/login');
-      }
-      console.log("Login successful");
-      req.session.userID = user.email;
-      res.redirect('/user/profile');
-    });
-});
-
 router.post('/register', (req, res) => {
-  userQueries.registerNewUser(req.body)
+  const { name, email, password } = req.body;
+  const hash = bcryptjs.hashSync(password);
+
+  userQueries.registerNewUser({ name, email, hash })
     .then((user) => {
       console.log("Registration successful", user);
       req.session.userID = user.email;
@@ -51,6 +36,26 @@ router.post('/register', (req, res) => {
     })
     .catch((err) => {
       res.redirect('/register');
+    });
+});
+
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  userQueries.getUserByEmail(email)
+    .then((user) => {
+      let error = null;
+      if(!user || !bcryptjs.compareSync(password, user.hash)) {
+        error = "Invalid login or password.";
+      }
+
+      if(error) {
+        console.log(error);
+        return res.redirect('/login');
+      }
+
+      console.log("Login successful");
+      req.session.userID = user.email;
+      res.redirect('/user/profile');
     });
 });
 

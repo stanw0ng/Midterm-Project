@@ -1,7 +1,7 @@
 const db = require('../connection');
 
 const addUserToDatabase = (user) => {
-  return db.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *`, [user.username, user.email, user.password])
+  return db.query(`INSERT INTO users (name, email, hash) VALUES ($1, $2, $3) RETURNING *`, [user.name, user.email, user.hash])
     .then(user => {
       return user.rows[0];
     });

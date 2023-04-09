@@ -1,6 +1,6 @@
 -- Users table seeds here (Example)
-INSERT INTO users (name, email, password) VALUES ('Bram Stoker', 'blood.is.life@vamp.com', 'dracula');
-INSERT INTO users (name, email, password) VALUES ('Mary Shelley', 'maryw@frank.com', 'itsalive');
-INSERT INTO users (name, email, password) VALUES ('Edgar Poe', 'original.goth@angst.com', 'nevermore');
-INSERT INTO users (name, email, password) VALUES ('Franz Kafka', 'fk@prague.cz', 'metamorphosis');
-INSERT INTO users (name, email, password) VALUES ('Henry James', 'the.american@newyork.us', 'password');
+INSERT INTO users (name, email, hash) VALUES ('Bram Stoker', 'blood.is.life@vamp.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
+INSERT INTO users (name, email, hash) VALUES ('Mary Shelley', 'maryw@frank.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
+INSERT INTO users (name, email, hash) VALUES ('Edgar Poe', 'original.goth@nevermore.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
+INSERT INTO users (name, email, hash) VALUES ('Franz Kafka', 'fk@prague.cz', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
+INSERT INTO users (name, email, hash) VALUES ('Henry James', 'the.american@newyork.us', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');

@@ -55,7 +55,7 @@ router.post('/login', (req, res) => {
 
       console.log("Login successful");
       req.session.userID = user.email;
-      res.redirect('/user/profile');
+      res.redirect('/read');
     });
 });
 

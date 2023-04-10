@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const userQueries = require('../db/queries/user-queries');
 
 const bcryptjs = require('bcryptjs');
@@ -44,11 +44,11 @@ router.post('/login', (req, res) => {
   userQueries.getUserByEmail(email)
     .then((user) => {
       let error = null;
-      if(!user || !bcryptjs.compareSync(password, user.hash)) {
+      if (!user || !bcryptjs.compareSync(password, user.hash)) {
         error = "Invalid login or password.";
       }
 
-      if(error) {
+      if (error) {
         console.log(error);
         return res.redirect('/login');
       }

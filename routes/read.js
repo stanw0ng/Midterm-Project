@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  return res.render('read_story', templateVars)
+  return res.render('read')
 });
 
 module.exports = router;

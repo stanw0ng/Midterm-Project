@@ -1,0 +1,46 @@
+.read-box {
+  display: flex;
+  flex-direction: column;
+  margin: 1em auto;
+  width: 80%;
+  font-size: 1.5em;
+}
+
+.story-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.read-box h2 {
+  margin-bottom: 1em;
+}
+
+.story-text {
+  flex-grow: 1;
+}
+
+.chapter-navigation {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.chapter-navigation ol {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 1em 0;
+  margin: 0;
+  width: 100%;
+}
+
+.chapter-navigation ol li {
+  flex: 1;
+  text-align: center;
+}
+
+.container {
+  background-color: black;
+  color: white;
+}

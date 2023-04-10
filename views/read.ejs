@@ -1,11 +1,25 @@
 <%- include('partials/_header', {title: "Story Maker"}); %>
 
-<h2>Read Story Page</h2>
-
-<!--
-  This would be the read view that displays the actual story
-  When fetching the information of the story, we will pass the title of the story
-  into the title include above, so that it shows up as the browser title
--->
+<div class = 'container'>
+  <div class = 'read-box'>
+    <div class = 'story-info'>
+      <h2>TITLE/STORY ID</h2>
+      <h2>CHAPTER</h2>
+    </div>
+    <section class="story-text">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate modi cumque nulla hic autem, corporis iure voluptates doloribus officia quae commodi, ab placeat impedit unde vitae nam perferendis, laborum optio?
+    </section>
+    <div class = 'chapter-navigation'>
+      <ol>
+        <li>Intro</li>
+        <li>Argument</li>
+        <li>Argument B</li>
+        <li>Argument C</li>
+        <li>Conclusion</li>
+        <li>Contributions</li>
+      </ol>
+    </div>
+  </div>
+</div>
 
 <%- include('partials/_footer'); %>

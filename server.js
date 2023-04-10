@@ -32,6 +32,7 @@ app.use(express.static('public'));
 // Note: Feel free to replace the example routes below with your own
 const credentialRoutes = require('./routes/credentials');
 const usersRoutes = require('./routes/user');
+const storyRoutes = require('./routes/write');
 const readRoutes = require('./routes/read')
 
 // Mount all resource routes
@@ -39,6 +40,7 @@ const readRoutes = require('./routes/read')
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/', credentialRoutes);
 app.use('/user', usersRoutes);
+app.use('/story', storyRoutes);
 app.use('/read', readRoutes);
 // Note: mount other resources here, using the same pattern above
 

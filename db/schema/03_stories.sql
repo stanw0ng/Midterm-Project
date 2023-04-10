@@ -4,8 +4,9 @@ CREATE TABLE stories (
   author_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   chapter_id INTEGER REFERENCES chapters(id) ON DELETE CASCADE,
   story_title VARCHAR(30) NOT NULL,
-  category SMALLINT NOT NULL,
-  genre SMALLINT NOT NULL,
-  age_rating SMALLINT NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  category VARCHAR(30) NOT NULL,
+  genre VARCHAR(30) NOT NULL,
+  age_rating VARCHAR(7) NOT NULL,
   date_created TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

@@ -10,6 +10,16 @@ const getStories = (limit = 10) => {
     });
 };
 
+const getMyStories = (userId) => {
+  return db.query('SELECT * FROM stories JOIN users ON author_id = users.id WHERE email = $1', [userId])
+    .then(res => {
+     return res.rows;
+    })
+    .catch(err => {
+      return null;
+    });
+};
+
 const getChapter = (chapter_id) => {
   return db.query(`SELECT title, text FROM chapters WHERE chapter_id = $1`, [chapter_id])
     .then(user => {
@@ -32,4 +42,4 @@ const getStoryContributions = (story_id) => {
   return db.query(`SELECT contributions.* FROM contributions WHERE story_id = $1`, [story_id]);
 };
 
-module.exports = { getStories, getChapter, getBookmarkedStories, getUserContributions, getStoryContributions };
+module.exports = { getStories, getMyStories, getChapter, getBookmarkedStories, getUserContributions, getStoryContributions };

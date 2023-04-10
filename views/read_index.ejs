@@ -4,19 +4,17 @@
   <section class = 'all-stories'>
     <h2>All Stories</h2>
     <ul>
-      <li>1</li>
-      <li>asdfads</li>
-      <li>21da</li>
-      <li>adsfads</li>
+      <% allStories.forEach(story => { %>
+        <li><a href="/stories/<%= story.id %>"><%= story.story_title %></a></li>
+      <% }); %>
     </ul>
   </section>
   <section class = 'my-stories'>
     <h2>My Stories</h2>
     <ul>
-      <li>1</li>
-      <li>asdfads</li>
-      <li>21da</li>
-      <li>adsfads</li>
+      <% myStories.forEach(story => { %>
+        <li><a href="/stories/<%= story.id %>"><%= story.story_title %></a></li>
+      <% }); %>
     </ul>
   </section>
 </div>

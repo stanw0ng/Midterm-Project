@@ -5,8 +5,19 @@ const storyQueries = require('../db/queries/story-queries');
 
 // renders read splash page
 router.get("/", (req, res) => {
-  res.render('read_index')
-});
+  const allStoriesPromise = storyQueries.getStories();
+  const myStoriesPromise = storyQueries.getMyStories(req.session.userID);
 
+  Promise.all([allStoriesPromise, myStoriesPromise])
+    .then(data => {
+      const [allStories, myStories] = data;
+      const templateVars = { allStories, myStories };
+      return res.render("read_index", templateVars);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error retrieving stories");
+    });
+});
 
 module.exports = router;

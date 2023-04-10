@@ -6,5 +6,6 @@ CREATE TABLE stories (
   story_title VARCHAR(30) NOT NULL,
   category SMALLINT NOT NULL,
   genre SMALLINT NOT NULL,
-  age_rating SMALLINT NOT NULL
+  age_rating SMALLINT NOT NULL,
+  date_created TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

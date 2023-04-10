@@ -6,5 +6,6 @@ CREATE TABLE contributions (
   chapter_id INTEGER REFERENCES chapters(id) ON DELETE CASCADE,
   chapter_number SMALLINT NOT NULL,
   upvotes INTEGER DEFAULT 0,
+  date_created TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   is_winner BOOLEAN DEFAULT FALSE
 );

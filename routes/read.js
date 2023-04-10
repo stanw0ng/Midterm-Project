@@ -2,7 +2,6 @@ const express = require('express');
 const router  = express.Router();
 const storyQueries = require('../db/queries/story-queries');
 
-
 // renders read splash page
 router.get("/", (req, res) => {
   const allStoriesPromise = storyQueries.getStories();
@@ -18,6 +17,10 @@ router.get("/", (req, res) => {
       console.error(err);
       res.status(500).send("Error retrieving stories");
     });
+});
+
+router.get('/:id', (req, res) => {
+  return res.render('read_story', templateVars)
 });
 
 module.exports = router;

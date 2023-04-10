@@ -5,31 +5,6 @@ body {
   margin: 0;
 }
 
-.container {
-  display: flex;
-  flex-grow: 1;
-}
-
-.all-stories {
-  display: flex;
-  flex-direction: column;
-  width: 50vw;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-  color: white;
-}
-
-.my-stories {
-  display: flex;
-  flex-direction: column;
-  width: 50vw;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(53, 53, 53);
-  color: white;
-}
-
 nav {
   background-color: grey;
   width: 100%;

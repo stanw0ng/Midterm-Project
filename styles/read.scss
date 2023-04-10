@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-grow: 1;
+}
+
+.half {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.all-stories {
+  background-color: black;
+}
+
+.my-stories {
+  background-color: rgb(53, 53, 53);
+}

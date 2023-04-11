@@ -12,7 +12,7 @@
     <div class = 'chapter-navigation'>
       <ol>
         <% childrenChapters.forEach(chapter => { %>
-          <li><a href="#"><%= chapter.title %></a></li>
+          <li><a href="/read/<%= rootChapter.story_title %>/<%= chapter.child_id %>"><%= chapter.title %></a></li>
         <% }); %>
         <li><a href="#">Contributions</a></li>
       </ol>

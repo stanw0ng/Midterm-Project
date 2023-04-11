@@ -37,4 +37,24 @@ router.get("/:story_title", (req, res) => {
     });
 });
 
+
+router.get("/:story_title/:id", (req, res) => {
+  const storyTitle = req.params.story_title;
+  const contributionId = req.params.id;
+  const getRootChapterPromise = storyQueries.getChapterData(contributionId)
+  const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyTitle)
+
+  Promise.all([getRootChapterPromise, getChildrenChaptersPromise])
+    .then(data => {
+      const [rootChapter, childrenChapters] = data;
+      const templateVars = { rootChapter, childrenChapters };
+      console.log(rootChapter)
+      return res.render('read', templateVars);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error retrieving stories");
+    });
+});
+
 module.exports = router;

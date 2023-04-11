@@ -26,10 +26,28 @@
 -- JOIN chapters ON stories.chapter_id = chapters.id
 -- WHERE stories.id = $1
 
+-- SELECT winners.child_id, chapters.title, chapters.id
+-- FROM winners
+-- JOIN stories ON winners.story_id = stories.id
+-- JOIN contributions ON winners.child_id = contributions.id
+-- JOIN chapters ON contributions.chapter_id = chapters.id
+-- WHERE stories.story_title = 'Dracula'
+-- ORDER BY winners.child_id
 
-SELECT winners.child_id, chapters.title
-FROM winners
-JOIN stories ON winners.story_id = stories.id
-JOIN contributions ON winners.child_id = contributions.id
-JOIN chapters ON contributions.chapter_id = chapters.id
-WHERE stories.story_title = $1
+-- SELECT winners.parent_id, chapters.title
+-- FROM winners
+-- JOIN contributions ON winners.child_id = contributions.id
+-- JOIN chapters ON chapters.id = contributions.chapter_id
+-- WHERE contributions.story_id = 1;
+
+-- SELECT chapters.body, stories.story
+-- FROM chapters
+-- JOIN contributions ON contributions.chapter_id = chapters.id
+-- JOIN stories ON contributions.story_id = stories.id
+-- WHERE contributions.id = $1
+
+  SELECT chapters.body, stories.story_title
+  FROM chapters
+  JOIN contributions ON contributions.chapter_id = chapters.id
+  JOIN stories ON contributions.story_id = stories.id
+  WHERE contributions.id = 6

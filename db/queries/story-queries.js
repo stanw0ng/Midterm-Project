@@ -39,12 +39,13 @@ const getRootChapter = (storyId) => {
 
 // WIP should fetch winning contributions
 const getChildrenChapters = (storyId) => {
-  return db.query(`SELECT winners.child_id, chapters.title
+  return db.query(`SELECT winners.child_id, chapters.title, chapters.id
   FROM winners
   JOIN stories ON winners.story_id = stories.id
   JOIN contributions ON winners.child_id = contributions.id
   JOIN chapters ON contributions.chapter_id = chapters.id
   WHERE stories.story_title = $1
+  ORDER BY winners.child_id
   `, [storyId])
   .then(user => {
     return user.rows;
@@ -53,6 +54,22 @@ const getChildrenChapters = (storyId) => {
     return null;
   });
 }
+
+const getChapterData = (contributionsId) => {
+  return db.query(`
+  SELECT chapters.body, stories.story_title
+  FROM chapters
+  JOIN contributions ON contributions.chapter_id = chapters.id
+  JOIN stories ON contributions.story_id = stories.id
+  WHERE contributions.id = $1
+  `, [contributionsId])
+    .then(user => {
+      return user.rows[0];
+    })
+    .catch(err => {
+      return null;
+    });
+};
 
 const getChapter = (chapter_id) => {
   return db.query(`SELECT title, text FROM chapters WHERE chapter_id = $1`, [chapter_id])
@@ -76,4 +93,4 @@ const getStoryContributions = (story_id) => {
   return db.query(`SELECT contributions.* FROM contributions WHERE story_id = $1`, [story_id]);
 };
 
-module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapter, getBookmarkedStories, getUserContributions, getStoryContributions };
+module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions, getStoryContributions };

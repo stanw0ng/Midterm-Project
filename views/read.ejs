@@ -3,20 +3,18 @@
 <div class = 'container'>
   <div class = 'read-box'>
     <div class = 'story-info'>
-      <h2>TITLE/STORY ID</h2>
-      <h2>CHAPTER</h2>
+      <h2><%= rootChapter.story_title %></h2>
+      <h2><%= rootChapter.title %></h2>
     </div>
     <section class="story-text">
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate modi cumque nulla hic autem, corporis iure voluptates doloribus officia quae commodi, ab placeat impedit unde vitae nam perferendis, laborum optio?
+      <%= rootChapter.body %>
     </section>
     <div class = 'chapter-navigation'>
       <ol>
-        <li>Intro</li>
-        <li>Argument</li>
-        <li>Argument B</li>
-        <li>Argument C</li>
-        <li>Conclusion</li>
-        <li>Contributions</li>
+        <% childrenChapters.forEach(chapter => { %>
+          <li><a href="#"><%= chapter.title %></a></li>
+        <% }); %>
+        <li><a href="#">Contributions</a></li>
       </ol>
     </div>
   </div>

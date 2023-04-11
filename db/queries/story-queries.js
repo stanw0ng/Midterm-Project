@@ -27,7 +27,7 @@ const getRootChapter = (storyId) => {
   return db.query(`SELECT stories.story_title, chapters.title, chapters.id, chapters.body
   FROM stories
   JOIN chapters ON stories.chapter_id = chapters.id
-  WHERE stories.id = $1
+  WHERE stories.story_title = $1
   `, [storyId])
     .then(res => {
      return res.rows[0];
@@ -44,7 +44,7 @@ const getChildrenChapters = (storyId) => {
   JOIN stories ON winners.story_id = stories.id
   JOIN contributions ON winners.child_id = contributions.id
   JOIN chapters ON contributions.chapter_id = chapters.id
-  WHERE stories.id = $1
+  WHERE stories.story_title = $1
   `, [storyId])
   .then(user => {
     return user.rows;

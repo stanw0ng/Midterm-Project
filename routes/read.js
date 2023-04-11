@@ -20,10 +20,10 @@ router.get("/", (req, res) => {
 });
 
 // renders page for story starting from root chapter and chapters
-router.get("/:id", (req, res) => {
-  const storyId = req.params.id;
-  const getRootChapterPromise = storyQueries.getRootChapter(storyId)
-  const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyId)
+router.get("/:story_title", (req, res) => {
+  const storyTitle = req.params.story_title;
+  const getRootChapterPromise = storyQueries.getRootChapter(storyTitle)
+  const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyTitle)
 
   Promise.all([getRootChapterPromise, getChildrenChaptersPromise])
     .then(data => {
@@ -36,6 +36,5 @@ router.get("/:id", (req, res) => {
       res.status(500).send("Error retrieving stories");
     });
 });
-
 
 module.exports = router;

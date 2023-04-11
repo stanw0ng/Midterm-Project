@@ -1,9 +1,9 @@
-<%- include('partials/_header', {title: "New Story - Story Maker" }); %>
+<%- include('partials/_header', {title: "New Story - Open Book" }); %>
   <main id="new-story">
     <h2>New Story</h2>
 
     <!-- This will be the page where the users will write their new story -->
-    <form method="POST" action="/story/new">
+    <form method="POST" id="draft" action="/story/new">
       <label for="storyTitle">Story Title</label>
       <input type="text" name="storyTitle" id="story-title">
 
@@ -41,26 +41,84 @@
       <label for="chapterTitle">Chapter Title</label>
       <input type="text" name="chapterTitle">
       <%- include('partials/_text_editor') %>
-      <button id="save-story">Save</button>
-      <button type="submit">Publish</button>
-      <button id="discard-story">Discard</button>
+        <div>
+          <button id="save-story">Save</button>
+          <button id="publish">Publish</button>
+          <button id="discard-story">Discard</button>
+        </div>
+        <div id="success" class="hidden notification">
+
+        </div>
+        <div id="fail" class="hidden notification">
+
+        </div>
 
     </form>
 
-    <script>
+  </main>
+  <script>
+    /**
+     * Updates the web page title with passed parameter, or defaults to "New Story";
+     */
+    const updateTitle = function(title) {
+      const text = title || "New Story";
+      $(document).attr('title', `${text} - Open Book`);
+    };
+
+    $(document).ready(function() {
       const $title = $('#story-title');
+      updateTitle($title.val());
+
+      const $notifications = $('.notification');
+      $notifications.hide();
+      $notifications.removeClass('hidden');
+
+      const $success = $('#success');
+      const $fail = $('#fail');
+
+      $('input').keydown(function(event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      });
+
+      $(document).submit(function() {
+        event.preventDefault();
+      });
+
       $title.on('focusout', () => {
-        $(document).attr('title', $title.val() + " - Open Book");
+        updateTitle($title.val());
       });
 
       $('#save-story').on('click', function() {
-        event.preventDefault();
-      });
-      $('#discard-story').on('click', function() {
-        event.preventDefault();
+        $notifications.slideUp();
+        const body = $('#draft').serialize();
+        $.post('/story/save/', body, function(data, status) {
+          if (data) {
+            $success.html(data);
+            $success.slideDown();
+            return;
+          }
+          $fail.html('Something went wrong with saving your new story. We apologize for the inconvenience.');
+          $fail.slideDown();
+        });
       });
 
-    </script>
-  </main>
+      $('#discard-story').on('click', function() {
+        $notifications.slideUp();
+        $.post('/story/discard/', function(result, status) {
+          if (result) {
+            window.location.href = "/read";
+            return;
+          };
+          $fail.html('Something went wrong with discarding your draft. We apologize for the inconvenience.');
+          $fail.slideDown();
+        });
+      });
+
+    });
+
+  </script>
 
   <%- include('partials/_footer'); %>

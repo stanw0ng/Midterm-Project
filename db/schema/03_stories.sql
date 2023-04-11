@@ -3,7 +3,7 @@ CREATE TABLE stories (
   id SERIAL PRIMARY KEY NOT NULL,
   author_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   chapter_id INTEGER REFERENCES chapters(id) ON DELETE CASCADE,
-  story_title VARCHAR(30) NOT NULL,
+  story_title VARCHAR(127) NOT NULL,
   description VARCHAR(255) NOT NULL,
   category VARCHAR(30) NOT NULL,
   genre VARCHAR(30) NOT NULL,

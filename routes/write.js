@@ -32,7 +32,62 @@ router.post('/new', (req, res) => {
   res.render('user_profile');
 });
 
-router.post('/new/delete', (req, res) => {
+router.post('/delete', (req, res) => {
+  const data = req.body;
+
+  const chapter = {
+    title: data.chapterTitle,
+    body: data.chapterText
+  };
+
+  const story = {
+    title: data.storyTitle,
+    description: data.description,
+    category: data.category,
+    genre: data.genre
+  };
+
+});
+
+router.post('/save', (req, res) => {
+  const data = req.body;
+
+  const chapter = {
+    title: data.chapterTitle,
+    body: data.chapterText
+  };
+
+  const story = {
+    title: data.storyTitle,
+    description: data.description,
+    category: data.category,
+    genre: data.genre,
+    rating: data.rating
+  };
+
+
+
+  if (!req.session.draftId) {
+    return writeQueries.saveNewStory(req.session.userID, chapter, story)
+    .then(id => {
+        req.session.draftId = id;
+        res.send(`New story saved`);
+      })
+      .catch((err) => {
+        res.send(false);
+      });
+  }
+  writeQueries.saveExistingStory(req.session.draftId, req.session.userID, chapter, story)
+  .then(() => {
+    return res.send(`Draft saved`);
+  })
+  .catch(() => {
+    res.send(false);
+  });
+
+});
+
+router.post('/publish', (req, res) => {
   const data = req.body;
   const chapter = {
     title: data.chapterTitle,
@@ -47,33 +102,15 @@ router.post('/new/delete', (req, res) => {
 
 });
 
-router.post('/new/save', (req, res) => {
-  const data = req.body;
-  const chapter = {
-    title: data.chapterTitle,
-    body: data.chapterText
-  };
-  const story = {
-    title: data.storyTitle,
-    description: data.description,
-    category: data.category,
-    genre: data.genre
-  };
+router.post('/discard/', (req, res) => {
 
-});
+  draftID = req.session.draftId;
+  req.session.draftId = null;
 
-router.post('/new/publish', (req, res) => {
-  const data = req.body;
-  const chapter = {
-    title: data.chapterTitle,
-    body: data.chapterText
-  };
-  const story = {
-    title: data.storyTitle,
-    description: data.description,
-    category: data.category,
-    genre: data.genre
-  };
+  writeQueries.discardStoryDraft(draftID)
+    .then((result) => {
+      res.send(result);
+    });
 
 });
 

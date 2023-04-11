@@ -33,7 +33,7 @@ app.use(express.static('public'));
 const credentialRoutes = require('./routes/credentials');
 const usersRoutes = require('./routes/user');
 const storyRoutes = require('./routes/write');
-const readRoutes = require('./routes/read')
+const readRoutes = require('./routes/read');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own

@@ -10,63 +10,67 @@ const insertNewChapter = (chapter) => {
     });
 };
 
+const updateStoryChapter = (draft_id, chapter) => {
+  return db.query(`UPDATE chapters SET (title, body) = ($1, $2) WHERE id = (SELECT chapter_id FROM stories WHERE id = $3);`, [chapter.title, chapter.body, draft_id])
+    .then(() => {
+      return true;
+    });
+};
+
 const insertNewStory = (authorID, chapterID, story) => {
-  db.query(
-    `INSERT INTO stories (author_id, chapter_id, story_title, description, category, genre, age_rating) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-    [authorID, chapterID, story.title, story.description, story.category, story.genre, story.rating]
-  );
+  return db.query(`INSERT INTO stories (author_id, chapter_id, story_title, description, category, genre, age_rating) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+    [authorID, chapterID, story.title, story.description, story.category, story.genre, story.rating])
+    .then(data => {
+      return data.rows[0].id;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const saveNewStory = (author_email, chapter, story) => {
   let authorID = null;
-  let chapterID = null;
+  // let chapterID = null;
 
   return getAuthorID(author_email)
     .then(author => {
       authorID = author.id;
     })
     .then(() => {
-      insertNewChapter(chapter)
+      return insertNewChapter(chapter)
         .then(newChapter => {
-          chapterID = newChapter;
+          return newChapter;
         });
     })
+    .then((chapterID) => {
+      return insertNewStory(authorID, chapterID, story);
+    })
+    .then(id => {
+      return id;
+    });
+
+};
+
+const saveExistingStory = (draft_id, author_email, chapter, story) => {
+  let authorID = null;
+
+  return getAuthorID(author_email)
+    .then(author => {
+      authorID = author.id;
+    })
     .then(() => {
-      insertNewStory(authorID, chapterID, story);
+      return updateStoryChapter(draft_id, chapter);
     });
-
 };
 
-const getStories = (limit = 10) => {
-  return db.query(`SELECT * FROM stories ORDER BY date_created DESC LIMIT $1;`, [limit])
-    .then(user => {
-      return user.rows;
+const discardStoryDraft = (draft_id) => {
+  return db.query(`DELETE FROM stories WHERE id = $1`, [draft_id])
+    .then(() => {
+      return true;
     })
-    .catch(err => {
-      return null;
+    .catch(() => {
+      return false;
     });
 };
 
-const getChapter = (chapter_id) => {
-  return db.query(`SELECT title, text FROM chapters WHERE chapter_id = $1`, [chapter_id])
-    .then(user => {
-      return user.rows;
-    })
-    .catch(err => {
-      return null;
-    });
-};
-
-const getBookmarkedStories = (user_id) => {
-  return db.query(`SELECT stories.* FROM stories JOIN bookmarks ON stories.id = bookmarks.story_id WHERE bookmarks.user_id = $1`, [user_id]);
-};
-
-const getUserContributions = (user_id) => {
-  return db.query(`SELECT contributions.* FROM contributions WHERE contributor_id = $1`, [user_id]);
-};
-
-const getStoryContributions = (story_id) => {
-  return db.query(`SELECT contributions.* FROM contributions WHERE story_id = $1`, [story_id]);
-};
-
-module.exports = { saveNewStory };
+module.exports = { saveNewStory, saveExistingStory, discardStoryDraft };

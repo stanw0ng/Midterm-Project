@@ -1,5 +1,5 @@
 <%- include('partials/_header', {title: "New Story - Open Book" }); %>
-  <main id="new-story">
+  <main id="story-editor">
     <h2>New Story</h2>
 
     <!-- This will be the page where the users will write their new story -->
@@ -56,80 +56,6 @@
     </form>
 
   </main>
-  <script>
-    /**
-     * Updates the web page title with passed parameter, or defaults to "New Story";
-     */
-    const updateTitle = function(title) {
-      const text = title || "New Story";
-      $(document).attr('title', `${text} - Open Book`);
-    };
-
-    const saveStory = function(success, fail, publish = false) {
-      const body = $('#draft').serialize();
-      $.post(`/story/save/${publish}`, body, function(data, status) {
-        if (data) {
-          if(publish){
-            window.location.href = "/read";
-            return;
-          }
-          success.html(data).slideDown();
-          return;
-        }
-        fail.html('Something went wrong with saving your new story. We apologize for the inconvenience.').slideDown();
-      });
-    };
-
-    $(document).ready(function() {
-      const $title = $('#story-title');
-      updateTitle($title.val());
-
-      const $notifications = $('.notification');
-      $notifications.hide();
-      $notifications.removeClass('hidden');
-
-      const $success = $('#success');
-      const $fail = $('#fail');
-
-      $('input').keydown(function(event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-      });
-
-      $(document).submit(function() {
-        event.preventDefault();
-      });
-
-      $title.on('focusout', () => {
-        updateTitle($title.val());
-      });
-
-      $('#save-story').on('click', function() {
-        $notifications.slideUp();
-        saveStory($success, $fail);
-      });
-
-      $('#publish').on('click', function() {
-        $notifications.slideUp();
-        saveStory($success, $fail, true);
-      });
-
-      $('#discard-story').on('click', function() {
-        $notifications.slideUp();
-        $.post('/story/discard/', function(result, status) {
-          if (result) {
-            window.location.href = "/read";
-            return;
-          };
-          $fail.html('Something went wrong with discarding your draft. We apologize for the inconvenience.');
-          $fail.slideDown();
-        });
-      });
-
-    });
-
-  </script>
+  <script type="text/javascript" src="/scripts/new.js"></script>
 
   <%- include('partials/_footer'); %>

@@ -1,15 +1,41 @@
-<%- include('partials/_header', {title: "Write Contribution - Story Maker"}); %>
-<h2>New Contribution</h2>
-<!-- This will be the page where the contributors will write their stories -->
-<form>
+<%- include('partials/_header', {title: "Write Contribution - Story Maker" }); %>
+  <main id="story-editor">
+    <h2>New Contribution</h2>
+    <div>
+      <h2 id="story-title" value="<%= id %>">Story: <%= storyTitle %>
+      </h2>
+      <h3 id="original-author">By: <%= storyAuthor %>
+      </h3>
+    </div>
+    <div>
+      <h4 id="previous-chapter" value="<%= id %>">Previous chapter: <%= lastWinner %>
+      </h4>
+      <h4 id="chapter-author">By: <%= winnerAuthor %>
+      </h4>
+    </div>
+    <form method="POST" id="draft" action="/story/new">
+      <label for="chapterTitle">Chapter Title</label>
+      <input type="text" name="chapterTitle">
+      <%- include('partials/_text_editor') %>
+        <div>
+          <button id="save-story">Save</button>
+          <button id="publish">Publish</button>
+          <button id="discard-story">Discard</button>
+        </div>
+        <div id="success" class="hidden notification">
 
-  <label for="chapter-title">Chapter Title</label>
-  <input type="text" name="chapter-title">
+        </div>
+        <div id="fail" class="hidden notification">
 
-  <%- include('partials/_text_editor') %>
+        </div>
 
-  <button>Submit</button>
+    </form>
 
-</form>
+  </main>
+  <script>
+    const storyID = Number($('#story-title').val());
 
-<%- include('partials/_footer'); %>
+
+
+  </script>
+  <%- include('partials/_footer'); %>

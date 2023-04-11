@@ -1,32 +1,34 @@
-#new-story {
+#story-editor {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 60vw;
+  padding: 20px;
 
   form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
     // justify-content: flex-start;
     // flex-wrap: wrap;
   }
 
   textarea {
-    margin: 20px;
+    margin: 30px;
+    padding: 8%;
     width: 50vw;
     height: 50vh;
-  }
-
-  * {
-    margin-bottom: 20px;
+    resize: none;
+    border: 2px dotted cornflowerblue;
+    outline: none;
   }
 
   label {
-    margin-bottom: 5px;
+    padding: 5px;
   }
 
-  input {
+  input, select {
     width: 50%;
   }
 
@@ -40,7 +42,6 @@
     justify-content: center;
   }
 }
-
 
 #success {
   background-color: lightgreen;

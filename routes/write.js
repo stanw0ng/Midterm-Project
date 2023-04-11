@@ -49,12 +49,14 @@ router.post('/delete', (req, res) => {
 
 });
 
-router.post('/save', (req, res) => {
+router.post('/save/:publish', (req, res) => {
   const data = req.body;
+  const publish = Boolean(req.params.publish);
 
   const chapter = {
     title: data.chapterTitle,
-    body: data.chapterText
+    body: data.chapterText,
+    published: publish
   };
 
   const story = {
@@ -64,8 +66,6 @@ router.post('/save', (req, res) => {
     genre: data.genre,
     rating: data.rating
   };
-
-
 
   if (!req.session.draftId) {
     return writeQueries.saveNewStory(req.session.userID, chapter, story)
@@ -84,21 +84,6 @@ router.post('/save', (req, res) => {
   .catch(() => {
     res.send(false);
   });
-
-});
-
-router.post('/publish', (req, res) => {
-  const data = req.body;
-  const chapter = {
-    title: data.chapterTitle,
-    body: data.chapterText
-  };
-  const story = {
-    title: data.storyTitle,
-    description: data.description,
-    category: data.category,
-    genre: data.genre
-  };
 
 });
 

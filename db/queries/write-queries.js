@@ -4,14 +4,14 @@ const userDb = require('./user-queries.js');
 const getAuthorID = userDb.getUserByEmail;
 
 const insertNewChapter = (chapter) => {
-  return db.query(`INSERT INTO chapters (title, body) VALUES ($1, $2) RETURNING id`, [chapter.title, chapter.body])
+  return db.query(`INSERT INTO chapters (title, body, published) VALUES ($1, $2, $3) RETURNING id`, [chapter.title, chapter.body, chapter.published])
     .then(chapter => {
       return chapter.rows[0].id;
     });
 };
 
 const updateStoryChapter = (draft_id, chapter) => {
-  return db.query(`UPDATE chapters SET (title, body) = ($1, $2) WHERE id = (SELECT chapter_id FROM stories WHERE id = $3);`, [chapter.title, chapter.body, draft_id])
+  return db.query(`UPDATE chapters SET (title, body, published) = ($1, $2, $3) WHERE id = (SELECT chapter_id FROM stories WHERE id = $4);`, [chapter.title, chapter.body, chapter.published, draft_id])
     .then(() => {
       return true;
     });
@@ -51,7 +51,7 @@ const saveNewStory = (author_email, chapter, story) => {
 
 };
 
-const saveExistingStory = (draft_id, author_email, chapter, story) => {
+const saveExistingStory = (draft_id, author_email, chapter) => {
   let authorID = null;
 
   return getAuthorID(author_email)

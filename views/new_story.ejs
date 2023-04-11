@@ -65,6 +65,21 @@
       $(document).attr('title', `${text} - Open Book`);
     };
 
+    const saveStory = function(success, fail, publish = false) {
+      const body = $('#draft').serialize();
+      $.post(`/story/save/${publish}`, body, function(data, status) {
+        if (data) {
+          if(publish){
+            window.location.href = "/read";
+            return;
+          }
+          success.html(data).slideDown();
+          return;
+        }
+        fail.html('Something went wrong with saving your new story. We apologize for the inconvenience.').slideDown();
+      });
+    };
+
     $(document).ready(function() {
       const $title = $('#story-title');
       updateTitle($title.val());
@@ -93,16 +108,12 @@
 
       $('#save-story').on('click', function() {
         $notifications.slideUp();
-        const body = $('#draft').serialize();
-        $.post('/story/save/', body, function(data, status) {
-          if (data) {
-            $success.html(data);
-            $success.slideDown();
-            return;
-          }
-          $fail.html('Something went wrong with saving your new story. We apologize for the inconvenience.');
-          $fail.slideDown();
-        });
+        saveStory($success, $fail);
+      });
+
+      $('#publish').on('click', function() {
+        $notifications.slideUp();
+        saveStory($success, $fail, true);
       });
 
       $('#discard-story').on('click', function() {

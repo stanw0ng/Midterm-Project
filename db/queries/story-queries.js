@@ -50,8 +50,8 @@ const getChildrenChapters = (storyId) => {
   WHERE stories.story_title = $1
   ORDER BY winners.child_id
   `, [storyId])
-  .then(user => {
-    return user.rows;
+  .then(chapters => {
+    return chapters.rows;
   })
   .catch(err => {
     return null;
@@ -60,16 +60,16 @@ const getChildrenChapters = (storyId) => {
 
 const getChapterData = (contributionsId) => {
   return db.query(`
-SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title, users.name, TO_CHAR(contributions.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date
-FROM contributions
-JOIN chapters ON contributions.chapter_id = chapters.id
-JOIN users ON contributions.contributor_id = users.id
-LEFT JOIN stories ON contributions.story_id = stories.id
-LEFT JOIN chapters AS root_chapter ON stories.chapter_id = root_chapter.id
-WHERE contributions.id = $1
+  SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title, users.name, TO_CHAR(contributions.date_created, 'MM/DD/YY, HH:MI:SS AM') AS publish_date
+  FROM contributions
+  JOIN chapters ON contributions.chapter_id = chapters.id
+  JOIN users ON contributions.contributor_id = users.id
+  LEFT JOIN stories ON contributions.story_id = stories.id
+  LEFT JOIN chapters AS root_chapter ON stories.chapter_id = root_chapter.id
+  WHERE contributions.id = $1
   `, [contributionsId])
-    .then(user => {
-      return user.rows[0];
+    .then(data => {
+      return data.rows[0];
     })
     .catch(err => {
       return null;
@@ -98,4 +98,20 @@ const getStoryContributions = (story_id) => {
   return db.query(`SELECT contributions.* FROM contributions WHERE story_id = $1`, [story_id]);
 };
 
-module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions, getStoryContributions };
+const getContributionsByTitle = (storyTitle) => {
+  return db.query(`
+  SELECT contributions.*, chapters.*
+  FROM contributions
+  JOIN stories ON contributions.story_id = stories.id
+  JOIN chapters ON contributions.chapter_id = chapters.id
+  WHERE stories.story_title = $1
+  `, [storyTitle])
+  .then(contributions => {
+    return contributions.rows;
+  })
+  .catch(err => {
+    return null;
+  });
+};
+
+module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions,  getStoryContributions, getContributionsByTitle };

@@ -6,7 +6,7 @@
     <ul>
       <% allStories.forEach(story => { %>
         <li><a href="/read/<%= story.story_title %>"><%= story.story_title %></a></li>
-        <%= story.description %></p>
+        <p><%= story.description %></p>
       <% }); %>
     </ul>
   </section>

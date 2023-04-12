@@ -60,7 +60,16 @@ router.get("/:story_title/chapter/:id", (req, res) => {
 
 // renders page for contributions
 router.get("/:story_title/contributions", (req, res) => {
-  return res.render('contributions');
+  const storyTitle = req.params.story_title
+  storyQueries.getContributionsByTitle(storyTitle).then(data => {
+    const templateVars = {contributions: data}
+    console.log(templateVars);
+    return res.render('contributions', templateVars);
+  })
+  .catch(err => {
+    console.error(err);
+    res.status(500).send("Error retrieving contributions");
+  });
 });
 
 module.exports = router;

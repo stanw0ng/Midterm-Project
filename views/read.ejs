@@ -21,9 +21,9 @@
           <li><a href="/read/<%= rootChapter.story_title %>"><%= rootChapter.root_chapter_title ? rootChapter.root_chapter_title : rootChapter.title %></a></li>
         <% } %>
         <% childrenChapters.forEach(chapter => { %>
-          <li><a href="/read/<%= rootChapter.story_title %>/<%= chapter.child_id %>"><%= chapter.title %></a></li>
+          <li><a href="/read/<%= rootChapter.story_title %>/chapter/<%= chapter.child_id %>"><%= chapter.title %></a></li>
         <% }); %>
-        <li><a href="#">Contributions</a></li>
+        <li><a href="/read/<%= rootChapter.story_title %>/contributions">Contributions</a></li>
       </ol>
     </div>
   </div>

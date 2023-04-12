@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// renders page for story starting from root chapter and chapters
+// renders page for root chapters
 router.get("/:story_title", (req, res) => {
   const storyTitle = req.params.story_title;
   const getRootChapterPromise = storyQueries.getRootChapter(storyTitle)
@@ -37,8 +37,8 @@ router.get("/:story_title", (req, res) => {
     });
 });
 
-
-router.get("/:story_title/:id", (req, res) => {
+// renders page for chapters
+router.get("/:story_title/chapter/:id", (req, res) => {
   const storyTitle = req.params.story_title;
   const contributionId = req.params.id;
   const getRootChapterPromise = storyQueries.getChapterData(contributionId);
@@ -56,5 +56,12 @@ router.get("/:story_title/:id", (req, res) => {
       res.status(500).send("Error retrieving stories");
     });
 });
+
+// renders page for contributions
+router.get("/:story_title/contributions", (req, res) => {
+  return res.render('contributions');
+});
+
+
 
 module.exports = router;

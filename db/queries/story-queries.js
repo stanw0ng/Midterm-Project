@@ -25,7 +25,7 @@ const getMyStories = (userId) => {
 // fetch root data for a story
 const getRootChapter = (storyId) => {
   return db.query(`
-  SELECT stories.story_title, chapters.title, chapters.id, chapters.body, users.name
+  SELECT stories.story_title, TO_CHAR(stories.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, chapters.title, chapters.id, chapters.body, users.name
   FROM stories
   JOIN users ON stories.author_id = users.id
   JOIN chapters ON stories.chapter_id = chapters.id
@@ -60,7 +60,7 @@ const getChildrenChapters = (storyId) => {
 
 const getChapterData = (contributionsId) => {
   return db.query(`
-SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title, users.name
+SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title, users.name, TO_CHAR(contributions.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date
 FROM contributions
 JOIN chapters ON contributions.chapter_id = chapters.id
 JOIN users ON contributions.contributor_id = users.id

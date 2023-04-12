@@ -19,7 +19,13 @@
 
 .author-date {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+}
+
+.author-date h3 {
+  display: flex;
+  flex-direction: column;
+  margin: .25em 0;
 }
 
 .read-box h2 {

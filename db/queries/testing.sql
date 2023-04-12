@@ -65,3 +65,12 @@ WHERE contributions.id = 6;
 
 -- SELECT child_id FROM chapter_relationships WHERE story_id = 1 ORDER BY child_id DESC LIMIT 1;
 >>>>>>> new-contribution
+-- SELECT winners.child_id, chapters.title
+-- FROM winners
+-- JOIN stories ON winners.story_id = stories.id
+-- JOIN contributions ON winners.child_id = contributions.id
+-- JOIN chapters ON contributions.chapter_id = chapters.id
+-- WHERE stories.story_title = $1
+
+
+-- SELECT child_id FROM chapter_relationships WHERE story_id = 1 ORDER BY child_id DESC LIMIT 1;

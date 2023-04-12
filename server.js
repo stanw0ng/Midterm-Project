@@ -33,7 +33,7 @@ app.use(express.static('public'));
 const credentialRoutes = require('./routes/credentials');
 const usersRoutes = require('./routes/user');
 const newStoryRoutes = require('./routes/write');
-const contributionRoutes = require('./routes/contribute');
+const contributionRoutes = require('./routes/contribution');
 const readRoutes = require('./routes/read');
 
 // Mount all resource routes
@@ -42,7 +42,7 @@ const readRoutes = require('./routes/read');
 app.use('/', credentialRoutes);
 app.use('/user', usersRoutes);
 app.use('/story', newStoryRoutes);
-app.use('/contribute', contributionRoutes);
+app.use('/contribution', contributionRoutes);
 app.use('/read', readRoutes);
 // Note: mount other resources here, using the same pattern above
 

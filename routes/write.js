@@ -13,41 +13,41 @@ router.get('/new', (req, res) => {
   res.render('new_story');
 });
 
-router.post('/new', (req, res) => {
-  const data = req.body;
-  const chapter = {
-    title: data.chapterTitle,
-    body: data.chapterText
-  };
-  const story = {
-    title: data.storyTitle,
-    description: data.description,
-    category: data.category,
-    genre: data.genre,
-    rating: data.rating
-  };
+// router.post('/new', (req, res) => {
+//   const data = req.body;
+//   const chapter = {
+//     title: data.chapterTitle,
+//     body: data.chapterText
+//   };
+//   const story = {
+//     title: data.storyTitle,
+//     description: data.description,
+//     category: data.category,
+//     genre: data.genre,
+//     rating: data.rating
+//   };
 
-  writeQueries.saveNewStory(req.session.userID, chapter, story).then(console.log("New story inserted successfully!"));
+//   writeQueries.saveNewStory(req.session.userID, chapter, story).then(console.log("New story inserted successfully!"));
 
-  res.render('user_profile');
-});
+//   res.render('user_profile');
+// });
 
-router.post('/delete', (req, res) => {
-  const data = req.body;
+// router.post('/delete', (req, res) => {
+//   const data = req.body;
 
-  const chapter = {
-    title: data.chapterTitle,
-    body: data.chapterText
-  };
+//   const chapter = {
+//     title: data.chapterTitle,
+//     body: data.chapterText
+//   };
 
-  const story = {
-    title: data.storyTitle,
-    description: data.description,
-    category: data.category,
-    genre: data.genre
-  };
+//   const story = {
+//     title: data.storyTitle,
+//     description: data.description,
+//     category: data.category,
+//     genre: data.genre
+//   };
 
-});
+// });
 
 router.post('/save/:publish', (req, res) => {
   const data = req.body;

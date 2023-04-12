@@ -41,8 +41,8 @@ router.get("/:story_title", (req, res) => {
 router.get("/:story_title/:id", (req, res) => {
   const storyTitle = req.params.story_title;
   const contributionId = req.params.id;
-  const getRootChapterPromise = storyQueries.getChapterData(contributionId)
-  const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyTitle)
+  const getRootChapterPromise = storyQueries.getChapterData(contributionId);
+  const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyTitle);
 
   Promise.all([getRootChapterPromise, getChildrenChaptersPromise])
     .then(data => {

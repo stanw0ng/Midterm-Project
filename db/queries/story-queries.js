@@ -57,7 +57,7 @@ const getChildrenChapters = (storyId) => {
 
 const getChapterData = (contributionsId) => {
   return db.query(`
-  SELECT chapters.body, stories.story_title, root_chapter.title
+  SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title
   FROM contributions
   JOIN chapters ON contributions.chapter_id = chapters.id
   LEFT JOIN stories ON contributions.story_id = stories.id

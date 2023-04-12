@@ -8,8 +8,18 @@
 
 .story-info {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   width: 100%;
+}
+
+.titles {
+  display: flex;
+  justify-content: space-between;
+}
+
+.author-date {
+  display: flex;
+  justify-content: space-between;
 }
 
 .read-box h2 {

@@ -24,8 +24,10 @@ const getMyStories = (userId) => {
 
 // fetch root data for a story
 const getRootChapter = (storyId) => {
-  return db.query(`SELECT stories.story_title, chapters.title, chapters.id, chapters.body
+  return db.query(`
+  SELECT stories.story_title, chapters.title, chapters.id, chapters.body, users.name
   FROM stories
+  JOIN users ON stories.author_id = users.id
   JOIN chapters ON stories.chapter_id = chapters.id
   WHERE stories.story_title = $1
   `, [storyId])
@@ -39,7 +41,8 @@ const getRootChapter = (storyId) => {
 
 // WIP should fetch winning contributions
 const getChildrenChapters = (storyId) => {
-  return db.query(`SELECT winners.child_id, chapters.title, chapters.id
+  return db.query(`
+  SELECT winners.child_id, chapters.title, chapters.id
   FROM winners
   JOIN stories ON winners.story_id = stories.id
   JOIN contributions ON winners.child_id = contributions.id
@@ -57,12 +60,13 @@ const getChildrenChapters = (storyId) => {
 
 const getChapterData = (contributionsId) => {
   return db.query(`
-  SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title
-  FROM contributions
-  JOIN chapters ON contributions.chapter_id = chapters.id
-  LEFT JOIN stories ON contributions.story_id = stories.id
-  LEFT JOIN chapters AS root_chapter ON stories.chapter_id = root_chapter.id
-  WHERE contributions.id = $1
+SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title, users.name
+FROM contributions
+JOIN chapters ON contributions.chapter_id = chapters.id
+JOIN users ON contributions.contributor_id = users.id
+LEFT JOIN stories ON contributions.story_id = stories.id
+LEFT JOIN chapters AS root_chapter ON stories.chapter_id = root_chapter.id
+WHERE contributions.id = $1
   `, [contributionsId])
     .then(user => {
       return user.rows[0];

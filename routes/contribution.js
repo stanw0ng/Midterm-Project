@@ -10,23 +10,18 @@ const queries = require('../db/queries/contribute-queries');
 // });
 
 router.get('/:id', (req, res) => {
-  const templateVars = {
-    id: req.params.id,
-    storyTitle: 'Dracula',
-    storyAuthor: 'Bram Stoker',
-    lastWinnerID: 1,
-    lastWinner: 'Chapter 2',
-    winnerAuthor: 'Mary Shelley'
-  };
-  res.render('new_contribution', templateVars);
+  queries.getLatestWinnerData(req.params.id)
+    .then(templateVars => {
+      res.render('new_contribution', templateVars);
+    })
 });
 
-router.post('/:id/:publish', (req, res) => {
+router.post('/:id/:winner/:publish', (req, res) => {
 
   const data = req.body;
   const publish = Boolean(req.params.publish);
 
-  console.log(req.body.storyID, req.body.lastChapter);
+  console.log(req.params.id, req.params.winner);
 
   const contribution = {
     storyID: req.params.id,
@@ -40,7 +35,7 @@ router.post('/:id/:publish', (req, res) => {
     return queries.createNewContribution(contribution)
     .then(id => {
         req.session.draftId = id;
-        res.send(`New story saved`);
+        res.send(`Contribution saved`);
       })
       .catch((err) => {
         res.send(false);
@@ -48,15 +43,19 @@ router.post('/:id/:publish', (req, res) => {
   }
   queries.saveContributionDraft(req.session.draftId, contribution)
   .then(() => {
-    return res.send(`Draft saved`);
+    return res.send(`Contribution updated`);
   })
-  .catch(() => {
+  .catch(err => {
+    console.log(err);
     res.send(false);
   });
 
 });
 
 router.post('/discard/', (req, res) => {
+  if(!req.session.draftId) {
+    return res.send(true);
+  }
 
   draftID = req.session.draftId;
   req.session.draftId = null;

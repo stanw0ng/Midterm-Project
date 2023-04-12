@@ -1,7 +1,7 @@
 <%- include('partials/_header', {title: "Write Contribution - Story Maker" }); %>
   <main id="story-editor">
     <h2>New Contribution</h2>
-    <form method="POST" id="draft" action="/contribution/<%= id %>/">
+    <form method="POST" id="draft" action="/contribution/<%= id %>/<%= lastWinnerID %>/">
       <div>
         <h2 id="story-title">Story: <%= storyTitle %>
         </h2>
@@ -36,6 +36,10 @@
     const storyID = Number($('#story-title').val());
 
     $(document).ready(function() {
+      const $draft = $('#draft');
+      const address = $draft.attr('action');
+      $draft.removeAttr('action');
+
       const $notifications = $('.notification');
       $notifications.hide();
       $notifications.removeClass('hidden');
@@ -61,18 +65,19 @@
       });
 
       $('#save-story').on('click', function() {
+        console.log(address);
         $notifications.slideUp();
-        saveContribution($success, $fail);
+        saveContribution(address + publish, $draft, $success, $fail);
       });
 
       $('#publish').on('click', function() {
         $notifications.slideUp();
-        saveContribution($success, $fail, true);
+        saveContribution(address + publish, $draft, $success, $fail, true);
       });
 
       $('#discard-story').on('click', function() {
         $notifications.slideUp();
-        $.post('/story/discard/', function(result, status) {
+        $.post('/contribution/discard/', function(result, status) {
           if (result) {
             window.location.href = "/read";
             return;
@@ -86,12 +91,9 @@
     /**
      * Handles the post request for saving and publishing new story
      */
-    const saveContribution = function(success, fail, publish = false) {
-      $draft = $('#draft');
-      address = $draft.attr('action');
-
-      const body = $draft.serialize();
-      $.post(address + publish, body, function(data, status) {
+    const saveContribution = function(address, draft, success, fail, publish = false) {
+      const body = draft.serialize();
+      $.post(address, body, function(data, status) {
         if (data) {
           if (publish) {
             window.location.href = "/read";

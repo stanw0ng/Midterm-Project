@@ -46,8 +46,9 @@
 -- JOIN stories ON contributions.story_id = stories.id
 -- WHERE contributions.id = $1
 
-  SELECT chapters.body, stories.story_title
-  FROM chapters
-  JOIN contributions ON contributions.chapter_id = chapters.id
-  JOIN stories ON contributions.story_id = stories.id
-  WHERE contributions.id = 6
+SELECT chapters.body, stories.story_title, root_chapter.title
+FROM contributions
+JOIN chapters ON contributions.chapter_id = chapters.id
+LEFT JOIN stories ON contributions.story_id = stories.id
+LEFT JOIN chapters AS root_chapter ON stories.chapter_id = root_chapter.id
+WHERE contributions.id = 6;

@@ -29,7 +29,8 @@
 
 .chapter-navigation ol {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
   list-style: none;
   padding: 1em 0;
   margin: 0;
@@ -39,6 +40,12 @@
 .chapter-navigation ol li {
   flex: 1;
   text-align: center;
+  padding: .5em;
+}
+
+.chapter-navigation ol li a {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .container {

@@ -11,6 +11,7 @@
     </section>
     <div class = 'chapter-navigation'>
       <ol>
+        <li><a href="/read/<%= rootChapter.story_title %>"><%= rootChapter.title %></a></li>
         <% childrenChapters.forEach(chapter => { %>
           <li><a href="/read/<%= rootChapter.story_title %>/<%= chapter.child_id %>"><%= chapter.title %></a></li>
         <% }); %>

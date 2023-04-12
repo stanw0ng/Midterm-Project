@@ -1,0 +1,32 @@
+<%- include('partials/_header', {title: "Story Maker"}); %>
+
+<div class = 'container'>
+  <div class = 'read-box'>
+    <div class = 'story-info'>
+      <div class = 'titles'>
+        <h2><%= rootChapter.story_title %></h2>
+        <h2><%= rootChapter.title %></h2>
+      </div>
+      <div class = 'author-date'>
+        <h3>By: <%= rootChapter.name ? rootChapter.name : rootChapter.author %></h3>
+        <h3>Published: <%= rootChapter.publish_date %></h3>
+      </div>
+    </div>
+    <section class="story-text">
+      <%= rootChapter.body %>
+    </section>
+    <div class = 'chapter-navigation'>
+      <ol>
+        <% if (rootChapter.title) { %>
+          <li><a href="/read/<%= rootChapter.story_title %>"><%= rootChapter.root_chapter_title ? rootChapter.root_chapter_title : rootChapter.title %></a></li>
+        <% } %>
+        <% childrenChapters.forEach(chapter => { %>
+          <li><a href="/read/<%= rootChapter.story_title %>/chapter/<%= chapter.child_id %>"><%= chapter.title %></a></li>
+        <% }); %>
+        <li><a href="/read/<%= rootChapter.story_title %>/contributions">Contributions</a></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/_footer'); %>

@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const queries = require('../db/queries/contribute-queries');
 
-// router.use((req, res, next) => {
-//   if (!req.session.userID) {
-//     return res.redirect('/login');
-//   }
-//   next();
-// });
+router.use((req, res, next) => {
+  if (!req.session.userID) {
+    return res.redirect('/login');
+  }
+  next();
+});
 
 router.get('/:id', (req, res) => {
   queries.getLatestWinnerData(req.params.id)

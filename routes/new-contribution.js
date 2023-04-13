@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const queries = require('../db/queries/contribute-queries');
 
-// router.use((req, res, next) => {
-//   if (!req.session.userID) {
-//     return res.redirect('/login');
-//   }
-//   next();
-// });
+router.use((req, res, next) => {
+  if (!req.session.userID) {
+    return res.redirect('/login');
+  }
+  next();
+});
 
 router.get('/:id', (req, res) => {
   queries.getLatestWinnerData(req.params.id)
@@ -46,6 +46,7 @@ router.post('/:id/:winner/:publish', (req, res) => {
     return res.send(`Contribution updated`);
   })
   .catch(err => {
+    req.session.draftId = null;
     console.log(err);
     res.send(false);
   });
@@ -61,8 +62,8 @@ router.post('/discard/', (req, res) => {
   req.session.draftId = null;
 
   queries.discardContribution(draftID)
-    .then((result) => {
-      res.send(result);
+    .then(() => {
+      res.send(true);
     });
 
 });

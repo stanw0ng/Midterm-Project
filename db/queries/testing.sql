@@ -97,8 +97,24 @@
 --   WHERE stories.id = 2
 --   GROUP BY contributions.id, chapters.title, users.name
 
-SELECT stories.story_title, TO_CHAR(stories.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date,
-  stories.description, stories.genre, stories.age_rating, stories.completed, users.name
-  FROM stories
-  JOIN users ON users.id = stories.author_id
-  ORDER BY date_created DESC LIMIT 10;
+-- SELECT stories.story_title, TO_CHAR(stories.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date,
+--   stories.description, stories.genre, stories.age_rating, stories.completed, users.name
+--   FROM stories
+--   JOIN users ON users.id = stories.author_id
+--   ORDER BY date_created DESC LIMIT 10;
+
+SELECT story.story_title as story_title, author.email as author_email, author.name as author_name, chapters.title as chapter_title, contributor.name as contributor_name, contributor.email as contributor_email, chapters.body as chapter_text
+FROM contributions
+JOIN users contributor ON contributions.contributor_id = contributor.id
+JOIN stories story ON contributions.story_id = story.id
+JOIN users author ON story.author_id = author.id
+JOIN chapters ON contributions.chapter_id = chapters.id
+WHERE contributions.id = 1;
+
+SELECT story.story_title as story_title, author.email as author_email, author.name as author_name, chapters.title as chapter_title, contributor.name as contributor_name, contributor.email as contributor_email, chapters.body as chapter_text
+FROM contributions
+JOIN users contributor ON contributions.contributor_id = contributor.id
+JOIN stories story ON contributions.story_id = story.id
+JOIN users author ON story.author_id = author.id
+JOIN chapters ON contributions.chapter_id = chapters.id
+WHERE contributions.id = 1;

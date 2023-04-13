@@ -16,8 +16,9 @@
 
   textarea {
     margin: 30px;
-    padding: 8%;
-    width: 50vw;
+    padding: 4em;
+    min-width: 30em;
+    max-width: 50em;
     height: 50vh;
     resize: none;
     border: 2px dotted cornflowerblue;

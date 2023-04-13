@@ -1,6 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 const storyQueries = require('../db/queries/story-queries');
+const helperQueries = require('../db/queries/helper-queries');
 
 // renders read splash page
 router.get("/", (req, res) => {
@@ -20,10 +21,10 @@ router.get("/", (req, res) => {
 });
 
 // renders page for root chapters
-router.get("/:story_title", (req, res) => {
-  const storyTitle = req.params.story_title;
-  const getRootChapterPromise = storyQueries.getRootChapter(storyTitle)
-  const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyTitle)
+router.get("/:storyId", (req, res) => {
+  const storyId = req.params.storyId;
+  const getRootChapterPromise = storyQueries.getRootChapter(storyId)
+  const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyId)
 
 
   Promise.all([getRootChapterPromise, getChildrenChaptersPromise])
@@ -39,11 +40,11 @@ router.get("/:story_title", (req, res) => {
 });
 
 // renders page for chapters
-router.get("/:story_title/chapter/:id", (req, res) => {
-  const storyTitle = req.params.story_title;
-  const contributionId = req.params.id;
+router.get("/:storyId/chapter/:contributionId", (req, res) => {
+  const storyId = req.params.storyId;
+  const contributionId = req.params.contributionId;
   const getRootChapterPromise = storyQueries.getChapterData(contributionId);
-  const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyTitle);
+  const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyId);
 
   Promise.all([getRootChapterPromise, getChildrenChaptersPromise])
     .then(data => {
@@ -59,17 +60,24 @@ router.get("/:story_title/chapter/:id", (req, res) => {
 });
 
 // renders page for contributions
-router.get("/:story_title/contributions", (req, res) => {
-  const storyTitle = req.params.story_title
-  storyQueries.getContributionsByTitle(storyTitle).then(data => {
+router.get("/:storyId/contributions", (req, res) => {
+  const storyId = req.params.storyId
+  storyQueries.getContributionsById(storyId).then(data => {
     const templateVars = {contributions: data}
-    console.log(templateVars);
     return res.render('contributions', templateVars);
   })
   .catch(err => {
     console.error(err);
     res.status(500).send("Error retrieving contributions");
   });
+});
+
+// upvoting
+router.post('/upvote', (req, res) => {
+  helperQueries.updateUpvotes(req.body.upvoteID, req.session.userID)
+    .then(count => {
+      res.send(count.rows[0]);
+    })
 });
 
 module.exports = router;

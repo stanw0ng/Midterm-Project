@@ -78,3 +78,21 @@
 
 
 -- SELECT child_id FROM chapter_relationships WHERE story_id = 1 ORDER BY child_id DESC LIMIT 1;
+
+  -- SELECT TO_CHAR(contributions.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, users.name, COUNT(upvotes.user_id) AS upvotes
+  -- FROM contributions
+  -- JOIN users ON contributions.contributor_id = users.id
+  -- LEFT JOIN upvotes ON upvotes.contribution_id = contributions.id
+  -- JOIN stories ON contributions.story_id = stories.id
+  -- JOIN chapters ON contributions.chapter_id = chapters.id
+  -- WHERE stories.story_title = 'Dracula'
+  -- GROUP BY contributions.date_created, chapters.id, users.name
+
+SELECT contributions.id, chapters.title, users.name, COUNT(upvotes.user_id) AS upvotes
+  FROM contributions
+  JOIN users ON contributions.contributor_id = users.id
+  LEFT JOIN upvotes ON upvotes.contribution_id = contributions.id
+  JOIN stories ON contributions.story_id = stories.id
+  JOIN chapters ON contributions.chapter_id = chapters.id
+  WHERE stories.story_title = 'Dracula'
+  GROUP BY contributions.id, users.name, chapters.title

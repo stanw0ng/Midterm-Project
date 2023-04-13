@@ -29,7 +29,7 @@ const getRootChapter = (storyId) => {
   FROM stories
   JOIN users ON stories.author_id = users.id
   JOIN chapters ON stories.chapter_id = chapters.id
-  WHERE stories.story_title = $1
+  WHERE stories.id = $1
   `, [storyId])
     .then(res => {
      return res.rows[0];
@@ -42,12 +42,12 @@ const getRootChapter = (storyId) => {
 // WIP should fetch winning contributions
 const getChildrenChapters = (storyId) => {
   return db.query(`
-  SELECT winners.child_id, chapters.title, chapters.id
+  SELECT winners.child_id, chapters.title
   FROM winners
   JOIN stories ON winners.story_id = stories.id
   JOIN contributions ON winners.child_id = contributions.id
   JOIN chapters ON contributions.chapter_id = chapters.id
-  WHERE stories.story_title = $1
+  WHERE stories.id = $1
   ORDER BY winners.child_id
   `, [storyId])
   .then(chapters => {
@@ -60,7 +60,7 @@ const getChildrenChapters = (storyId) => {
 
 const getChapterData = (contributionsId) => {
   return db.query(`
-  SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title, users.name, TO_CHAR(contributions.date_created, 'MM/DD/YY, HH:MI:SS AM') AS publish_date
+  SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title, users.name, TO_CHAR(contributions.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, stories.id
   FROM contributions
   JOIN chapters ON contributions.chapter_id = chapters.id
   JOIN users ON contributions.contributor_id = users.id
@@ -98,14 +98,17 @@ const getStoryContributions = (story_id) => {
   return db.query(`SELECT contributions.* FROM contributions WHERE story_id = $1`, [story_id]);
 };
 
-const getContributionsByTitle = (storyTitle) => {
+const getContributionsById = (storyId) => {
   return db.query(`
-  SELECT contributions.*, chapters.*
+  SELECT contributions.id, TO_CHAR(contributions.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, chapters.title, users.name, COUNT(upvotes.user_id) AS upvotes
   FROM contributions
+  JOIN users ON contributions.contributor_id = users.id
+  LEFT JOIN upvotes ON upvotes.contribution_id = contributions.id
   JOIN stories ON contributions.story_id = stories.id
   JOIN chapters ON contributions.chapter_id = chapters.id
-  WHERE stories.story_title = $1
-  `, [storyTitle])
+  WHERE stories.id = $1
+  GROUP BY contributions.id, chapters.title, users.name
+  `, [storyId])
   .then(contributions => {
     return contributions.rows;
   })
@@ -114,4 +117,4 @@ const getContributionsByTitle = (storyTitle) => {
   });
 };
 
-module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions,  getStoryContributions, getContributionsByTitle };
+module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions,  getStoryContributions, getContributionsById };

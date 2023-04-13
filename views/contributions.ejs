@@ -1,43 +1,62 @@
 <%- include('partials/_header', {title: "Open Book" }); %>
 
-  <div class="container">
-    <div class="contributions-box">
+<div class="container">
+  <div class="contributions-box">
+    <% if (storyStatus[0].completed === true) { %>
+      <div class="contribution stop">The story is complete, nothing more to say!</div>
+    <% } else { %>
       <div class="contribution plus">+ Add Contribution</div>
-      <% contributions.forEach(contribution=> { %>
-        <div class=contribution>
-          <div>
-            <%= contribution.title %>
-          </div>
-          <div>By: <%= contribution.name %>
-          </div>
-          <div>Published: <%= contribution.publish_date %>
-          </div>
-          <div id="<%= contribution.id %>">
-            <%= contribution.upvotes %>
-              <%= contribution.upvotes==='1' ? 'Upvote' : 'Upvotes' %>
-          </div>
-          <div>
-            <button class="upvote-btn" data-contribution-id="<%= contribution.id %>">Upvote</button>
-          </div>
+    <% } %>
+    <% contributions.forEach(contribution=> { %>
+      <div class="contribution" data-contribution-id="<%= contribution.contributions_id %>">
+        <div>
+          <%= contribution.title %>
         </div>
-        <% }); %>
-    </div>
+        <div>By: <%= contribution.name %>
+        </div>
+        <div>Published: <%= contribution.publish_date %>
+        </div>
+        <div id="<%= contribution.id %>">
+          <%= contribution.upvotes %>
+          <%= contribution.upvotes==='1' ? 'Upvote' : 'Upvotes' %>
+        </div>
+        <div>
+          <button class="upvote-btn" data-contribution-id="<%= contribution.id %>">Upvote</button>
+        </div>
+      </div>
+      <% }); %>
   </div>
+</div>
 
-  <script>
-    $(document).ready(function() {
+<script>
+  $(document).ready(function() {
 
-      const $button = $('.upvote-btn');
-      $button.click(function() {
-        const upvoteID = $(this).attr('data-contribution-id');
-        $.post(`/read/upvote/`, { upvoteID }, function(upvotes, status) {
-          if (upvotes.count !== undefined) {
-            const tail = upvotes.count === 1 ? 'Upvote' : 'Upvotes';
-            $(`#${upvoteID}`).html(`${upvotes.count} ${tail}`);
-          }
-        });
+    $('.plus').click(function() {
+      window.location.href = `/contribute/<%= storyId %>`;
+    });
+
+    $('.contribution').click(function(event) {
+      if ($(this).hasClass('stop')) {
+        event.preventDefault();
+      } else {
+        const contributionID = $(this).attr('data-contribution-id');
+        window.location.href = `/contribution/${contributionID}`;
+      }
+    });
+
+    const $button = $('.upvote-btn');
+    $button.click(function() {
+      const upvoteID = $(this).attr('data-contribution-id');
+      $.post(`/read/upvote/`, { upvoteID }, function(upvotes, status) {
+        if (upvotes.count !== undefined) {
+          const tail = upvotes.count === 1 ? 'Upvote' : 'Upvotes';
+          $(`#${upvoteID}`).html(`${upvotes.count} ${tail}`);
+        }
       });
     });
-  </script>
 
-  <%- include('partials/_footer'); %>
+  });
+</script>
+
+<%- include('partials/_footer'); %>
+

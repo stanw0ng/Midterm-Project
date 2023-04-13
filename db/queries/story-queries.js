@@ -104,6 +104,16 @@ const getStoryContributions = (story_id) => {
   return db.query(`SELECT contributions.* FROM contributions WHERE story_id = $1`, [story_id]);
 };
 
+const getStoryStatus = (story_id) => {
+  return db.query(`SELECT stories.completed FROM stories WHERE id = $1`, [story_id])
+  .then(contributions => {
+    return contributions.rows;
+  })
+  .catch(err => {
+    return null;
+  });
+};
+
 const getContributionsById = (storyId) => {
   return db.query(`
   SELECT contributions.id AS contributions_id, TO_CHAR(contributions.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, chapters.title, users.name, COUNT(upvotes.user_id) AS upvotes
@@ -123,4 +133,4 @@ const getContributionsById = (storyId) => {
   });
 };
 
-module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions,  getStoryContributions, getContributionsById };
+module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions,  getStoryContributions, getStoryStatus, getContributionsById };

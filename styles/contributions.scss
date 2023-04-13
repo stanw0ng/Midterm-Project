@@ -17,6 +17,7 @@
   height: 15em;
   width: 15em;
   justify-content: center;
+  align-items: center;
   gap: .5em;
 }
 
@@ -24,8 +25,19 @@
   align-items: center;
 }
 
-.plus:hover{
+.contribution:hover {
   color: blue;
   border: 1px solid blue;
   cursor: pointer;
+}
+
+
+.stop:hover {
+  color: red;
+  border: 1px solid red;
+  cursor: pointer;
+}
+
+contribution.stop {
+  display: flex;
 }

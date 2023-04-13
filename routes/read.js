@@ -61,9 +61,14 @@ router.get("/:storyId/chapter/:contributionId", (req, res) => {
 
 // renders page for contributions
 router.get("/:storyId/contributions", (req, res) => {
-  const storyId = req.params.storyId
-  storyQueries.getContributionsById(storyId).then(data => {
-    const templateVars = {contributions: data}
+  const storyId = Number(req.params.storyId);
+  const getStoryStatusPromise = storyQueries.getStoryStatus(storyId);
+  const getContributionsByIdPromise = storyQueries.getContributionsById(storyId);
+
+  Promise.all([getStoryStatusPromise, getContributionsByIdPromise])
+    .then(data => {
+    const [storyStatus, contributions] = data;
+    const templateVars = {contributions, storyId, storyStatus}
     console.log(templateVars)
     return res.render('contributions', templateVars);
   })

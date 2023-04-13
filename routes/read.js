@@ -87,10 +87,8 @@ router.get("/:storyId/contributions", (req, res) => {
 
 // upvoting
 router.post('/upvote', (req, res) => {
-
   helperQueries.updateUpvotes(req.body.upvoteID, req.session.userID)
     .then(count => {
-
       res.send(String(count.rows[0].count));
     })
 });

@@ -138,4 +138,18 @@ const getContributionsById = (storyId) => {
   });
 };
 
-module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions,  getStoryContributions, getStoryStatus, getContributionsById };
+const getWinnersByStoryId = (storyId) => {
+  return db.query(`
+  SELECT winners.child_id
+  FROM winners
+  WHERE story_id = $1
+  `, [storyId])
+  . then(winners => {
+    return winners.rows;
+  })
+  .catch(err => {
+    return null;
+  });
+};
+
+module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions,  getStoryContributions, getStoryStatus, getContributionsById, getWinnersByStoryId };

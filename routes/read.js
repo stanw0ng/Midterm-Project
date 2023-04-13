@@ -61,21 +61,28 @@ router.get("/:storyId/chapter/:contributionId", (req, res) => {
 
 // renders page for contributions
 router.get("/:storyId/contributions", (req, res) => {
-  const storyId = Number(req.params.storyId);
+  const storyId = req.params.storyId;
   const getStoryStatusPromise = storyQueries.getStoryStatus(storyId);
   const getContributionsByIdPromise = storyQueries.getContributionsById(storyId);
   const getUserUpvotesPromise = helperQueries.getUserUpvotes(req.session.userID);
+  const getWinnersByStoryIdPromise = storyQueries.getWinnersByStoryId(storyId);
 
-  Promise.all([getStoryStatusPromise, getContributionsByIdPromise, getUserUpvotesPromise])
+  Promise.all([getStoryStatusPromise, getContributionsByIdPromise, getUserUpvotesPromise, getWinnersByStoryIdPromise])
   .then(data => {
-    const [storyStatus, contributions, upVoteArray] = data;
+    const [storyStatus, contributions, upVoteArray, winnersArray] = data;
 
+    // parses upVoteArray to more manageable data to access
     const upvotes = [];
     upVoteArray.forEach(c => {
       upvotes.push(c.contribution_id);
     });
 
-    const templateVars = {contributions, storyId, storyStatus, userName: req.session.userName, upvotes}
+    const winners = [];
+    winnersArray.forEach(w => {
+      winners.push(w.child_id);
+    })
+
+    const templateVars = {contributions, storyId, storyStatus, userName: req.session.userName, upvotes, winners}
     console.log(templateVars);
     return res.render('contributions', templateVars);
   })

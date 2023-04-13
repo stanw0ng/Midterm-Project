@@ -46,11 +46,35 @@ router.post('/close/:id/:close', (req, res) => {
     });
 });
 
+router.post('/update/:id', (req, res) => {
+  const data = req.body;
+
+  const chapter = {
+    title: data.chapterTitle,
+    body: data.chapterText,
+  };
+  const story = {
+    id: req.params.id,
+    title: data.storyTitle,
+    description: data.description,
+    category: data.category,
+    genre: data.genre,
+    rating: data.rating
+  };
+  manageQueries.updateStory(story, chapter)
+    .then(() => {
+      return res.send(`Story updated`);
+    })
+    .catch(() => {
+      res.send(false);
+    });
+});
+
 router.get('/edit/:id', (req, res) => {
   manageQueries.getStoryData(req.params.id)
     .then(data => {
       res.render('edit_story', data);
-    })
+    });
 
 });
 

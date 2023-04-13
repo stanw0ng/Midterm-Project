@@ -5,4 +5,4 @@
   It will be embedded into the form element in both the new story views and the new contribution views
 -->
 
-<textarea id="text-editor" name="chapterText"></textarea>
+<textarea id="text-editor" name="chapterText"><% if(body) { %><%= body %><% } %></textarea>

@@ -32,6 +32,7 @@ router.post('/register', (req, res) => {
     .then((user) => {
       console.log("Registration successful", user);
       req.session.userID = user.email;
+      req.session.userName = user.name;
       res.redirect('/user/profile');
     })
     .catch((err) => {
@@ -55,6 +56,7 @@ router.post('/login', (req, res) => {
 
       console.log("Login successful");
       req.session.userID = user.email;
+      req.session.userName = user.name;
       res.redirect('/read');
     });
 });

@@ -1,9 +1,43 @@
-<%- include('partials/_header', {title: "Story Maker"}); %>
+<%- include('partials/_header', {title: "Open Book" }); %>
 
-<div class="container">
-  <div class="read-box">
-    <h2>this is where all the contributions go ✍</h2>
+  <div class="container">
+    <div class="contributions-box">
+      <div class="contribution plus">+ Add Contribution</div>
+      <% contributions.forEach(contribution=> { %>
+        <div class=contribution>
+          <div>
+            <%= contribution.title %>
+          </div>
+          <div>By: <%= contribution.name %>
+          </div>
+          <div>Published: <%= contribution.publish_date %>
+          </div>
+          <div id="<%= contribution.id %>">
+            <%= contribution.upvotes %>
+              <%= contribution.upvotes==='1' ? 'Upvote' : 'Upvotes' %>
+          </div>
+          <div>
+            <button class="upvote-btn" data-contribution-id="<%= contribution.id %>">Upvote</button>
+          </div>
+        </div>
+        <% }); %>
+    </div>
   </div>
-</div>
 
-<%- include('partials/_footer'); %>
+  <script>
+    $(document).ready(function() {
+
+      const $button = $('.upvote-btn');
+      $button.click(function() {
+        const upvoteID = $(this).attr('data-contribution-id');
+        $.post(`/read/upvote/`, { upvoteID }, function(upvotes, status) {
+          if (upvotes.count !== undefined) {
+            const tail = upvotes.count === 1 ? 'Upvote' : 'Upvotes';
+            $(`#${upvoteID}`).html(`${upvotes.count} ${tail}`);
+          }
+        });
+      });
+    });
+  </script>
+
+  <%- include('partials/_footer'); %>

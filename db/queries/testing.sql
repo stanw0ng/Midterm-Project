@@ -58,6 +58,7 @@
 -- FROM contributions
 -- JOIN stories on contributions.story_id = stories.id
 -- WHERE stories.story_title = 'Dracula'
+
 -- SELECT winners.child_id, chapters.title
 -- FROM winners
 -- JOIN stories ON winners.story_id = stories.id
@@ -67,6 +68,7 @@
 
 
 -- SELECT child_id FROM chapter_relationships WHERE story_id = 1 ORDER BY child_id DESC LIMIT 1;
+
 -- SELECT winners.child_id, chapters.title
 -- FROM winners
 -- JOIN stories ON winners.story_id = stories.id
@@ -76,6 +78,24 @@
 
 
 -- SELECT child_id FROM chapter_relationships WHERE story_id = 1 ORDER BY child_id DESC LIMIT 1;
+
+  -- SELECT TO_CHAR(contributions.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, users.name, COUNT(upvotes.user_id) AS upvotes
+  -- FROM contributions
+  -- JOIN users ON contributions.contributor_id = users.id
+  -- LEFT JOIN upvotes ON upvotes.contribution_id = contributions.id
+  -- JOIN stories ON contributions.story_id = stories.id
+  -- JOIN chapters ON contributions.chapter_id = chapters.id
+  -- WHERE stories.story_title = 'Dracula'
+  -- GROUP BY contributions.date_created, chapters.id, users.name
+
+ SELECT contributions.id, TO_CHAR(contributions.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, chapters.title, users.name, COUNT(upvotes.user_id) AS upvotes
+  FROM contributions
+  JOIN users ON contributions.contributor_id = users.id
+  LEFT JOIN upvotes ON upvotes.contribution_id = contributions.id
+  JOIN stories ON contributions.story_id = stories.id
+  JOIN chapters ON contributions.chapter_id = chapters.id
+  WHERE stories.id = 2
+  GROUP BY contributions.id, chapters.title, users.name
 
 SELECT story.story_title as story_title, author.email as author_email, author.name as author_name, chapters.title as chapter_title, contributor.name as contributor_name, contributor.email as contributor_email, chapters.body as chapter_text
 FROM contributions

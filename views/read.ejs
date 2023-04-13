@@ -1,4 +1,4 @@
-<%- include('partials/_header', {title: "Story Maker"}); %>
+<%- include('partials/_header', {title: "Open Book"}); %>
 
 <div class = 'container'>
   <div class = 'read-box'>
@@ -18,12 +18,12 @@
     <div class = 'chapter-navigation'>
       <ol>
         <% if (rootChapter.title) { %>
-          <li><a href="/read/<%= rootChapter.story_title %>"><%= rootChapter.root_chapter_title ? rootChapter.root_chapter_title : rootChapter.title %></a></li>
+          <li><a href="/read/<%= rootChapter.id %>"><%= rootChapter.root_chapter_title ? rootChapter.root_chapter_title : rootChapter.title %></a></li>
         <% } %>
         <% childrenChapters.forEach(chapter => { %>
-          <li><a href="/read/<%= rootChapter.story_title %>/chapter/<%= chapter.child_id %>"><%= chapter.title %></a></li>
+          <li><a href="/read/<%= rootChapter.id %>/chapter/<%= chapter.child_id %>"><%= chapter.title %></a></li>
         <% }); %>
-        <li><a href="/read/<%= rootChapter.story_title %>/contributions">Contributions</a></li>
+        <li><a href="/read/<%= rootChapter.id %>/contributions">Contributions</a></li>
       </ol>
     </div>
   </div>

@@ -41,4 +41,11 @@ const getUserUpvotes = (userEmail) => {
     });
 };
 
-module.exports = { updateUpvotes, getUserUpvotes };
+const getUpvotes = (contributionID) => {
+  return db.query(`SELECT COUNT(id) as total_upvotes FROM upvotes WHERE contribution_id = $1`, [contributionID])
+    .then(upvotes => {
+      return upvotes.rows.length ? upvotes.rows[0].total_upvotes : 0;
+    });
+};
+
+module.exports = { updateUpvotes, getUserUpvotes, getUpvotes };

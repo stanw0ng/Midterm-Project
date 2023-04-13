@@ -13,12 +13,9 @@ const getContributionChapter = (contributionId) => {
   WHERE contributions.id = $1;`, [contributionId])
     .then(result => {
       if (!result.rows.length) {
-        throw new Error("Couldn't find this contribution.");
+        return {};
       }
       return result.rows[0];
-    })
-    .catch(err => {
-      console.log(err);
     });
 };
 

@@ -10,12 +10,14 @@
           <h2>
             <%= chapter_title %>
           </h2>
+
         </div>
-        <div class='author-date'>
+        <div class='stats'>
           <h3>By: <%= contributor_name %>
           </h3>
           <h3>Published: <%= publish_date %>
           </h3>
+          <h3>Total Upvotes: <span id="upvote-count"><%= upvotes %></span></h3>
         </div>
       </div>
       <section class="story-text">
@@ -25,15 +27,19 @@
         <ol>
           <li><a href="/read">🔙 Contributions</a></li>
           <li class="f-sb">
-          <% if (authorView) { %>
-            <button id="approve-button">🥇 Approve Followup</button>
-          <% } %>
-          <% if (contributorView) { %>
-            <button id="delete-button">🗑️ Delete Entry</button>
-          <% } %>
-          <% if (!contributorView && signedIn) { %>
-            <button id="upvote-button">👍 Upvote</button>
-          <% } %>
+            <% if (authorView) { %>
+              <button id="approve-button">🥇 Approve Followup</button>
+            <% } %>
+            <% if (contributorView) { %>
+              <button id="delete-button">🗑️ Delete Entry</button>
+            <% } %>
+            <% if (!contributorView && signedIn) { %>
+              <% if(!upvoted) { %>
+                <button id="upvote-button">👍 Upvote</button>
+              <% } else { %>
+                <button id="upvote-button">👍 Upvoted</button>
+              <% } %>
+            <% } %>
           </li>
         </ol>
       </footer>
@@ -41,9 +47,10 @@
   </div>
   <script>
     $(document).ready(function() {
-      const entry_id = $('.story-info').attr('id');
+      const upvoteID = $('.story-info').attr('id');
+
       $('#approve-button').click(function() {
-        $.post(`/contribution/approve/`, { entry_id }, function(data, status) {
+        $.post(`/contribution/approve/`, { upvoteID }, function(data, status) {
           if (data) {
             window.location.href = "/read";
             return;
@@ -52,7 +59,7 @@
       });
 
       $('#delete-button').click(function() {
-        $.post(`/contribution/delete/`, { entry_id }, function(data, status) {
+        $.post(`/contribution/delete/`, { upvoteID }, function(data, status) {
           if (data) {
             window.location.href = "/read";
             return;
@@ -61,7 +68,17 @@
       });
 
       $('#upvote-button').click(function() {
+        const $thisButton = $(this);
+        $.post(`/read/upvote/`, { upvoteID }, function(upvotes, status) {
+          console.log(upvotes);
+          if (upvotes !== undefined) {
+            //Get button's HTML
+            const label = $thisButton.html();
+            $thisButton.html(label === "👍 Upvote" ? "👍 Upvoted" : "👍 Upvote");
 
+            $(`#upvote-count`).html(upvotes);
+          }
+        });
       });
 
     });

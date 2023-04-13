@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const writeQueries = require('../db/queries/write-queries');
 const manageQueries = require('../db/queries/manage-queries');
-const { render } = require('ejs');
 
 router.use((req, res, next) => {
   if (!req.session.userID) {
@@ -73,7 +72,9 @@ router.post('/update/:id', (req, res) => {
 router.get('/edit/:id', (req, res) => {
   manageQueries.getStoryData(req.params.id)
     .then(data => {
-      res.render('edit_story', data);
+      console.log(data);
+      const templateVars = { userName: req.session.userName, story: data };
+      res.render('edit_story', templateVars);
     });
 
 });

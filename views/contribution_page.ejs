@@ -25,15 +25,15 @@
         <ol>
           <li><a href="/read">🔙 Contributions</a></li>
           <li class="f-sb">
-            <% if (authorView) { %>
-              <button id="approve-button">🥇 Approve Followup</button>
-              <% } %>
-                <% if (contributorView) { %>
-                  <button id="delete-button">🗑️ Delete Entry</button>
-                  <% } %>
-                    <% if (!contributorView && signedIn) { %>
-                      <button id="upvote-button">👍 Upvote</button>
-                      <% } %>
+          <% if (authorView) { %>
+            <button id="approve-button">🥇 Approve Followup</button>
+          <% } %>
+          <% if (contributorView) { %>
+            <button id="delete-button">🗑️ Delete Entry</button>
+          <% } %>
+          <% if (!contributorView && signedIn) { %>
+            <button id="upvote-button">👍 Upvote</button>
+          <% } %>
           </li>
         </ol>
       </footer>

@@ -58,7 +58,7 @@ router.post('/discard/', (req, res) => {
   draftID = req.session.draftId;
   req.session.draftId = null;
 
-  writeQueries.discardStoryDraft(draftID)
+  writeQueries.deleteStory(draftID)
     .then(() => {
       res.redirect('/read');
     });

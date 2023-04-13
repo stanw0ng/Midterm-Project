@@ -121,4 +121,10 @@
 --   WHERE stories.id = 1
 --   GROUP BY contributions_id, chapters.title, users.name, stories.id
 
-  SELECT stories.completed FROM stories WHERE id = 1;
+  -- SELECT stories.completed FROM stories WHERE id = 1;
+
+
+SELECT stories.*, chapters.published FROM stories
+JOIN users ON stories.author_id = users.id
+JOIN chapters ON stories.chapter_id = chapters.id
+WHERE users.email = $1;

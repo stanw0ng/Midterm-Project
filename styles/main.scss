@@ -1,3 +1,5 @@
+@use 'variables';
+
 body {
   display: flex;
   flex-direction: column;
@@ -59,7 +61,7 @@ nav {
 }
 
 footer {
-  background-color: grey;
+  background-color: variables.$nav-background;
   width: 100%;
   height: 3em;
 }

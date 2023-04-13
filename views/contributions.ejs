@@ -8,7 +8,7 @@
       <div class="contribution plus">+ Add Contribution</div>
     <% } %>
     <% contributions.forEach(contribution=> { %>
-      <div class="contribution" data-contribution-id="<%= contribution.contributions_id %>">
+      <div class="contribution entry" data-contribution-id="<%= contribution.contributions_id %>">
         <div>
           <%= contribution.title %>
         </div>
@@ -35,7 +35,7 @@
       window.location.href = `/contribute/<%= storyId %>`;
     });
 
-    $('.contribution').click(function(event) {
+    $('.entry').click(function(event) {
       if ($(this).hasClass('stop')) {
         event.preventDefault();
       } else {

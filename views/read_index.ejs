@@ -39,7 +39,7 @@
         </p>
         <ul>
           <li><a href="/read/<%= story.id %>">Read</a></li>
-          <li><a href="/edit/<%= story.id %>">Edit</a></li>
+          <li><a href="/manage/edit/<%= story.id %>">Edit</a></li>
           <li>
             <form method="POST" action="/manage/delete/<%= story.id %>">
               <button type="submit" class="danger">Delete</button>
@@ -71,13 +71,13 @@
             <button type="submit" class="danger">Open</button>
           </form>
         <% } else { %>
-          This story is open to contributions.<br>Close it to prevent further contributions.</p></li>
+          This story is currently open to contributions.<br>Close it to prevent further contributions.</p></li>
           <li><form method="POST" action="/manage/close/<%= story.id %>/true">
             <button type="submit" class="danger">Close</button>
           </form>
         <% } %>
-      </li>
-    </ul>
+        </li>
+      </ul>
         </div>
       <% }); %>
       </div>

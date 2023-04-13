@@ -19,7 +19,22 @@ const setCloseStory = (storyID, close) => {
     .catch(err => {
       console.log(err);
       return false;
-    })
+    });
 };
 
-module.exports = { setPublishedChapter, setCloseStory };
+const getStoryData = (storyID) => {
+  return db.query(`SELECT stories.story_title, stories.description, stories.category, stories.genre, stories.age_rating, chapters.title as chapter_title, chapters.body
+  FROM stories
+  JOIN chapters ON stories.chapter_id = chapters.id
+  WHERE stories.id = $1`,
+    [storyID])
+    .then(data => {
+      return data.rows[0];
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
+    });
+};
+
+module.exports = { setPublishedChapter, setCloseStory, getStoryData };

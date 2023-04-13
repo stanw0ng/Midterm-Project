@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const writeQueries = require('../db/queries/write-queries');
 const manageQueries = require('../db/queries/manage-queries');
+const { render } = require('ejs');
 
 router.use((req, res, next) => {
   if (!req.session.userID) {
@@ -30,19 +31,27 @@ router.post('/publish/:chapter/:publish', (req, res) => {
       }
       res.redirect('/read');
     });
-  });
+});
 
-  router.post('/close/:id/:close', (req, res) => {
-    const storyID = req.params.id;
-    const close = req.params.close;
+router.post('/close/:id/:close', (req, res) => {
+  const storyID = req.params.id;
+  const close = req.params.close;
 
-    manageQueries.setCloseStory(storyID, close)
+  manageQueries.setCloseStory(storyID, close)
     .then((result) => {
-      if(!result) {
+      if (!result) {
         return res.redirect('/read');
       }
       res.redirect('/read');
     });
+});
+
+router.get('/edit/:id', (req, res) => {
+  manageQueries.getStoryData(req.params.id)
+    .then(data => {
+      res.render('edit_story', data);
+    })
+
 });
 
 

@@ -13,9 +13,42 @@
 }
 
 .all-stories {
+  display: flex;
+  gap: 1em;
   background-color: black;
+  justify-content: center;
 }
 
 .my-stories {
   background-color: rgb(53, 53, 53);
+}
+
+.card-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+
+.story-card{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid white;
+  padding: 1em;
+  align-items: center;
+}
+
+.story-card a{
+  font-size: 1.5em;
+}
+
+.story-card p{
+  font-size: 1em;
+  margin: .25em 0;
+}
+
+.story-card .description{
+  font-size: 1em;
+  font-style: italic;
 }

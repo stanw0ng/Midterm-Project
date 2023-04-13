@@ -3,21 +3,26 @@
 <div class = 'container'>
   <section class = 'all-stories half'>
     <h2>All Stories</h2>
-    <ul>
-      <% allStories.forEach(story => { %>
-        <li>
-          <a href="/read/<%= story.id %>">
-            <%= story.story_title %><% if (story.completed) { %>
-              - Completed
-            <% } else { %>
-              - Ongoing
-            <% } %>
-          </a>
-          <p><%= story.description %></p>
-        </li>
 
+      <div class="card-box">
+      <% allStories.forEach(story => { %>
+        <div class = "story-card">
+          <a href="/read/<%= story.id %>">
+          <%= story.story_title %><% if (story.completed) { %>
+            - Completed
+          <% } else { %>
+            - Ongoing
+          <% } %>
+          </a>
+          <p>By <%= story.name %>, Published <%= story.publish_date %></p>
+          <p><%= story.genre %> / <%= story.category %></p>
+          <p class = 'description'><%= story.description %></p>
+        </div>
       <% }); %>
-    </ul>
+      </div>
+      <div class = "card-box">
+
+      </div>
   </section>
   <section class = 'my-stories half'>
     <h2>My Stories</h2>

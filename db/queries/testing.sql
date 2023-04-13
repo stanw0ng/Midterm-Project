@@ -88,11 +88,17 @@
   -- WHERE stories.story_title = 'Dracula'
   -- GROUP BY contributions.date_created, chapters.id, users.name
 
- SELECT contributions.id, TO_CHAR(contributions.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, chapters.title, users.name, COUNT(upvotes.user_id) AS upvotes
-  FROM contributions
-  JOIN users ON contributions.contributor_id = users.id
-  LEFT JOIN upvotes ON upvotes.contribution_id = contributions.id
-  JOIN stories ON contributions.story_id = stories.id
-  JOIN chapters ON contributions.chapter_id = chapters.id
-  WHERE stories.id = 2
-  GROUP BY contributions.id, chapters.title, users.name
+--  SELECT contributions.id, TO_CHAR(contributions.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, chapters.title, users.name, COUNT(upvotes.user_id) AS upvotes
+--   FROM contributions
+--   JOIN users ON contributions.contributor_id = users.id
+--   LEFT JOIN upvotes ON upvotes.contribution_id = contributions.id
+--   JOIN stories ON contributions.story_id = stories.id
+--   JOIN chapters ON contributions.chapter_id = chapters.id
+--   WHERE stories.id = 2
+--   GROUP BY contributions.id, chapters.title, users.name
+
+SELECT stories.story_title, TO_CHAR(stories.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date,
+  stories.description, stories.genre, stories.age_rating, stories.completed, users.name
+  FROM stories
+  JOIN users ON users.id = stories.author_id
+  ORDER BY date_created DESC LIMIT 10;

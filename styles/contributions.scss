@@ -23,3 +23,9 @@
 .plus {
   align-items: center;
 }
+
+.plus:hover{
+  color: blue;
+  border: 1px solid blue;
+  cursor: pointer;
+}

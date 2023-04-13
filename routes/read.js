@@ -1,4 +1,4 @@
-const express = require('express');
+   const express = require('express');
 const router  = express.Router();
 const storyQueries = require('../db/queries/story-queries');
 const helperQueries = require('../db/queries/helper-queries');
@@ -64,12 +64,19 @@ router.get("/:storyId/contributions", (req, res) => {
   const storyId = Number(req.params.storyId);
   const getStoryStatusPromise = storyQueries.getStoryStatus(storyId);
   const getContributionsByIdPromise = storyQueries.getContributionsById(storyId);
+  const getUserUpvotesPromise = helperQueries.getUserUpvotes(req.session.userID);
 
-  Promise.all([getStoryStatusPromise, getContributionsByIdPromise])
-    .then(data => {
-    const [storyStatus, contributions] = data;
-    const templateVars = {contributions, storyId, storyStatus, userName: req.session.userName}
-    console.log(templateVars)
+  Promise.all([getStoryStatusPromise, getContributionsByIdPromise, getUserUpvotesPromise])
+  .then(data => {
+    const [storyStatus, contributions, upVoteArray] = data;
+
+    const upvotes = [];
+    upVoteArray.forEach(c => {
+      upvotes.push(c.contribution_id);
+    });
+
+    const templateVars = {contributions, storyId, storyStatus, userName: req.session.userName, upvotes}
+    console.log(templateVars);
     return res.render('contributions', templateVars);
   })
   .catch(err => {
@@ -80,8 +87,10 @@ router.get("/:storyId/contributions", (req, res) => {
 
 // upvoting
 router.post('/upvote', (req, res) => {
+
   helperQueries.updateUpvotes(req.body.upvoteID, req.session.userID)
     .then(count => {
+
       res.send(String(count.rows[0].count));
     })
 });

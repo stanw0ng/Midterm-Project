@@ -31,6 +31,7 @@ router.get("/:storyId", (req, res) => {
     .then(data => {
       const [rootChapter, childrenChapters] = data;
       const templateVars = { rootChapter, childrenChapters };
+      console.log(templateVars)
       return res.render('read', templateVars);
     })
     .catch(err => {
@@ -50,7 +51,6 @@ router.get("/:storyId/chapter/:contributionId", (req, res) => {
     .then(data => {
       const [rootChapter, childrenChapters] = data;
       const templateVars = { rootChapter, childrenChapters };
-      console.log(rootChapter)
       return res.render('read', templateVars);
     })
     .catch(err => {
@@ -64,6 +64,7 @@ router.get("/:storyId/contributions", (req, res) => {
   const storyId = req.params.storyId
   storyQueries.getContributionsById(storyId).then(data => {
     const templateVars = {contributions: data}
+    console.log(templateVars)
     return res.render('contributions', templateVars);
   })
   .catch(err => {
@@ -76,7 +77,7 @@ router.get("/:storyId/contributions", (req, res) => {
 router.post('/upvote', (req, res) => {
   helperQueries.updateUpvotes(req.body.upvoteID, req.session.userID)
     .then(count => {
-      res.send(count.rows[0]);
+      res.send(String(count.rows[0].count));
     })
 });
 

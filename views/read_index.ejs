@@ -5,8 +5,17 @@
     <h2>All Stories</h2>
     <ul>
       <% allStories.forEach(story => { %>
-        <li><a href="/read/<%= story.id %>"><%= story.story_title %></a></li>
-        <p><%= story.description %></p>
+        <li>
+          <a href="/read/<%= story.id %>">
+            <%= story.story_title %><% if (story.completed) { %>
+              - Completed
+            <% } else { %>
+              - Ongoing
+            <% } %>
+          </a>
+          <p><%= story.description %></p>
+        </li>
+
       <% }); %>
     </ul>
   </section>

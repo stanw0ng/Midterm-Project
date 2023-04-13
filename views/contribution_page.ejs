@@ -1,0 +1,71 @@
+<%- include('partials/_header', {title: chapter_title }); %>
+
+  <div class='container'>
+    <div class='read-box'>
+      <div class='story-info' id="<%= id %>">
+        <div class='titles'>
+          <h2>
+            <%= story_title %>
+          </h2>
+          <h2>
+            <%= chapter_title %>
+          </h2>
+        </div>
+        <div class='author-date'>
+          <h3>By: <%= contributor_name %>
+          </h3>
+          <h3>Published: <%= publish_date %>
+          </h3>
+        </div>
+      </div>
+      <section class="story-text">
+        <%= body %>
+      </section>
+      <footer class='chapter-navigation'>
+        <ol>
+          <li><a href="/read">🔙 Contributions</a></li>
+          <li class="f-sb">
+            <% if (authorView) { %>
+              <button id="approve-button">🥇 Approve Followup</button>
+              <% } %>
+                <% if (contributorView) { %>
+                  <button id="delete-button">🗑️ Delete Entry</button>
+                  <% } %>
+                    <% if (!contributorView && signedIn) { %>
+                      <button id="upvote-button">👍 Upvote</button>
+                      <% } %>
+          </li>
+        </ol>
+      </footer>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function() {
+      const entry_id = $('.story-info').attr('id');
+      $('#approve-button').click(function() {
+        $.post(`/contribution/approve/`, { entry_id }, function(data, status) {
+          if (data) {
+            window.location.href = "/read";
+            return;
+          }
+        });
+      });
+
+      $('#delete-button').click(function() {
+        $.post(`/contribution/delete/`, { entry_id }, function(data, status) {
+          if (data) {
+            window.location.href = "/read";
+            return;
+          }
+        });
+      });
+
+      $('#upvote-button').click(function() {
+
+      });
+
+    });
+
+  </script>
+
+  <%- include('partials/_footer'); %>

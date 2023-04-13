@@ -43,9 +43,9 @@ const readContributionRoutes = require('./routes/read-contribution');
 app.use('/', credentialRoutes);
 app.use('/user', usersRoutes);
 app.use('/story', newStoryRoutes);
-app.use('/contribution', contributionRoutes);
+app.use('/contribute', contributionRoutes);
 app.use('/read', readRoutes);
-app.use('/submission', readContributionRoutes);
+app.use('/contribution', readContributionRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page

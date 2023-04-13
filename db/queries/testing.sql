@@ -46,8 +46,7 @@
 -- JOIN stories ON contributions.story_id = stories.id
 -- WHERE contributions.id = $1
 
--- <<<<<<< HEAD
-SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title, users.name
+-- SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_title, chapters.title, users.name
 -- FROM contributions
 -- JOIN chapters ON contributions.chapter_id = chapters.id
 -- JOIN users ON contributions.contributor_id = users.id
@@ -55,27 +54,33 @@ SELECT chapters.body, stories.story_title, root_chapter.title AS root_chapter_ti
 -- LEFT JOIN chapters AS root_chapter ON stories.chapter_id = root_chapter.id
 -- WHERE contributions.id = 6;
 
-SELECT contributions.*
+-- SELECT contributions.*
+-- FROM contributions
+-- JOIN stories on contributions.story_id = stories.id
+-- WHERE stories.story_title = 'Dracula'
+-- SELECT winners.child_id, chapters.title
+-- FROM winners
+-- JOIN stories ON winners.story_id = stories.id
+-- JOIN contributions ON winners.child_id = contributions.id
+-- JOIN chapters ON contributions.chapter_id = chapters.id
+-- WHERE stories.story_title = $1
+
+
+-- SELECT child_id FROM chapter_relationships WHERE story_id = 1 ORDER BY child_id DESC LIMIT 1;
+-- SELECT winners.child_id, chapters.title
+-- FROM winners
+-- JOIN stories ON winners.story_id = stories.id
+-- JOIN contributions ON winners.child_id = contributions.id
+-- JOIN chapters ON contributions.chapter_id = chapters.id
+-- WHERE stories.story_title = $1
+
+
+-- SELECT child_id FROM chapter_relationships WHERE story_id = 1 ORDER BY child_id DESC LIMIT 1;
+
+SELECT story.story_title as story_title, author.email as author_email, author.name as author_name, chapters.title as chapter_title, contributor.name as contributor_name, contributor.email as contributor_email, chapters.body as chapter_text
 FROM contributions
-JOIN stories on contributions.story_id = stories.id
-WHERE stories.story_title = 'Dracula'
-=======
--- SELECT winners.child_id, chapters.title
--- FROM winners
--- JOIN stories ON winners.story_id = stories.id
--- JOIN contributions ON winners.child_id = contributions.id
--- JOIN chapters ON contributions.chapter_id = chapters.id
--- WHERE stories.story_title = $1
-
-
--- SELECT child_id FROM chapter_relationships WHERE story_id = 1 ORDER BY child_id DESC LIMIT 1;
->>>>>>> new-contribution
--- SELECT winners.child_id, chapters.title
--- FROM winners
--- JOIN stories ON winners.story_id = stories.id
--- JOIN contributions ON winners.child_id = contributions.id
--- JOIN chapters ON contributions.chapter_id = chapters.id
--- WHERE stories.story_title = $1
-
-
--- SELECT child_id FROM chapter_relationships WHERE story_id = 1 ORDER BY child_id DESC LIMIT 1;
+JOIN users contributor ON contributions.contributor_id = contributor.id
+JOIN stories story ON contributions.story_id = story.id
+JOIN users author ON story.author_id = author.id
+JOIN chapters ON contributions.chapter_id = chapters.id
+WHERE contributions.id = 1;

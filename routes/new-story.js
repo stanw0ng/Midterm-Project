@@ -57,8 +57,8 @@ router.post('/discard/', (req, res) => {
   req.session.draftId = null;
 
   writeQueries.discardStoryDraft(draftID)
-    .then((result) => {
-      res.send(result);
+    .then(() => {
+      res.redirect('/read');
     });
 
 });

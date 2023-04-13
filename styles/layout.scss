@@ -5,6 +5,15 @@ html {
   margin: 0;
 }
 
+a:link {
+  text-decoration: none;
+}
+
 .mb-20 {
   margin-bottom: 20px;
+}
+
+.f-sb {
+  display: flex;
+  justify-content: space-around;
 }

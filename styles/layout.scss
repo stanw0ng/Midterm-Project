@@ -1,12 +1,28 @@
 // See: https://sass-lang.com/
+@use 'variables';
 
 body,
 html {
   margin: 0;
+  background-color: variables.$background-dark;
+  color: variables.$text-normal;
 }
 
 a:link {
   text-decoration: none;
+  color: variables.$link-normal;
+}
+
+a:visited {
+  color: variables.$link-normal;
+}
+
+a:hover {
+  color: variables.$link-highlighted;
+}
+
+a:active {
+  color: variables.$link-clicked;
 }
 
 .mb-20 {

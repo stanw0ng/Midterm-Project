@@ -1,3 +1,5 @@
+@use 'variables';
+
 .read-box {
   display: flex;
   flex-direction: column;
@@ -68,6 +70,6 @@
 }
 
 .container {
-  background-color: black;
-  color: white;
+  background-color: variables.$background-dark;
+  color: variables.$text-normal;
 }

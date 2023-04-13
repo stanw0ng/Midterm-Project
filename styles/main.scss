@@ -6,13 +6,23 @@ body {
 }
 
 nav {
+  display: flex;
   background-color: grey;
   width: 100%;
-  height: 8em;
+  height: 6em;
+  align-items: center;
+}
+
+.links {
+  font-size: 2em;
+  padding: 1em;
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
 }
 
 footer {
   background-color: grey;
   width: 100%;
-  height: 4em;
+  height: 3em;
 }

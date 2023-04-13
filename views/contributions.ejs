@@ -39,8 +39,8 @@
       if ($(this).hasClass('stop')) {
         event.preventDefault();
       } else {
-        const contributionID = $(this).attr('data-contribution-id');
-        window.location.href = `/contribution/${contributionID}`;
+      const contributionID = $(this).attr('data-contribution-id');
+      window.location.href = `/contribution/${contributionID}`;
       }
     });
 

@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
   Promise.all([allStoriesPromise, myStoriesPromise])
     .then(data => {
       const [allStories, myStories] = data;
-      const templateVars = { allStories, myStories };
+      const templateVars = { allStories, myStories, userName: req.session.userName };
       return res.render("read_index", templateVars);
     })
     .catch(err => {
@@ -30,7 +30,7 @@ router.get("/:storyId", (req, res) => {
   Promise.all([getRootChapterPromise, getChildrenChaptersPromise])
     .then(data => {
       const [rootChapter, childrenChapters] = data;
-      const templateVars = { rootChapter, childrenChapters };
+      const templateVars = { rootChapter, childrenChapters, userName: req.session.userName };
       console.log(templateVars)
       return res.render('read', templateVars);
     })
@@ -50,7 +50,7 @@ router.get("/:storyId/chapter/:contributionId", (req, res) => {
   Promise.all([getRootChapterPromise, getChildrenChaptersPromise])
     .then(data => {
       const [rootChapter, childrenChapters] = data;
-      const templateVars = { rootChapter, childrenChapters };
+      const templateVars = { rootChapter, childrenChapters, userName: req.session.userName };
       return res.render('read', templateVars);
     })
     .catch(err => {
@@ -68,7 +68,7 @@ router.get("/:storyId/contributions", (req, res) => {
   Promise.all([getStoryStatusPromise, getContributionsByIdPromise])
     .then(data => {
     const [storyStatus, contributions] = data;
-    const templateVars = {contributions, storyId, storyStatus}
+    const templateVars = {contributions, storyId, storyStatus, userName: req.session.userName}
     console.log(templateVars)
     return res.render('contributions', templateVars);
   })

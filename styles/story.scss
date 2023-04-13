@@ -59,15 +59,15 @@
 .chapter-navigation ol li {
   flex: 1;
   text-align: center;
-  padding: .5em;
+  padding: 1em;
 }
 
 .chapter-navigation ol li a {
   display: inline-block;
+  text-decoration: underline;
   white-space: nowrap;
 }
 
 .container {
-  background-color: black;
   color: white;
 }

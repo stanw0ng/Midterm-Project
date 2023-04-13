@@ -21,7 +21,7 @@
           <%= contribution.upvotes==='1' ? 'Upvote' : 'Upvotes' %>
         </div>
         <div>
-          <button class="upvote-btn" data-contribution-id="<%= contribution.id %>">Upvote</button>
+<!--           <button class="upvote-btn" data-contribution-id="<%= contribution.id %>">Upvote</button> -->
         </div>
       </div>
       <% }); %>
@@ -44,7 +44,7 @@
       }
     });
 
-    const $button = $('.upvote-btn');
+/*     const $button = $('.upvote-btn');
     $button.click(function() {
       const upvoteID = $(this).attr('data-contribution-id');
       $.post(`/read/upvote/`, { upvoteID }, function(upvotes, status) {
@@ -53,7 +53,7 @@
           $(`#${upvoteID}`).html(`${upvotes.count} ${tail}`);
         }
       });
-    });
+    }); */
 
   });
 </script>

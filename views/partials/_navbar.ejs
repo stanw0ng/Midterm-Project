@@ -1,14 +1,27 @@
 <nav>
   <div class = "links">
     <a href = '/read'>Read</a>
-    <a href = '/write'>Write</a>
+    <a href = '/story/new'>Write</a>
     <a href = '/write'>Edit</a>
     <a href = '/profile'>Profile</a>
   </div>
 
+  <div class = "greeting">
+    <% if (userName) { %>
+      <p>Hello, <%= userName %></p>
+    <% } else { %>
+      <p>Hello. <%= userName %></p>
+    <% } %>
+  </div>
+
+
   <div class = "access">
-    <a href="/login">Log In</a>
-    <a href="/logout">Log Out</a>
-    <a href="/register">Make New Account</a>
+    <% if (userName) { %>
+      <a href="/logout">Log Out</a>
+      <a href="/register">Sign Up</a>
+    <% } else { %>
+      <a href="/login">Log In</a>
+      <a href="/register">Sign Up</a>
+    <% } %>
   </div>
 </nav>

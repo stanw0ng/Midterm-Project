@@ -12,11 +12,13 @@ const userQueries = require('../db/queries/user-queries');
 const bcryptjs = require('bcryptjs');
 
 router.get('/register', (req, res) => {
-  res.render('register');
+  const templateVars = {userName: null}
+  res.render('register', templateVars);
 });
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  const templateVars = {userName: null}
+  res.render('login', templateVars);
 });
 
 router.get('/logout', (req, res) => {

@@ -12,6 +12,7 @@ router.use((req, res, next) => {
 router.get('/:id', (req, res) => {
   queries.getLatestWinnerData(req.params.id)
     .then(templateVars => {
+      templateVars.userName = req.session.userName;
       res.render('new_contribution', templateVars);
     })
 });

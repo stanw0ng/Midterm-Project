@@ -13,6 +13,8 @@ router.get("/:id", (req, res) => {
       templateVars.authorView = result.author_email === req.session.userID;
       templateVars.contributorView = result.contributor_email === req.session.userID;
       templateVars.signedIn = req.session.userID;
+      templateVars.userName = req.session.userName;
+
 
       res.render('contribution_page', templateVars);
     })

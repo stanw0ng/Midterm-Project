@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const writeQueries = require('../db/queries/write-queries');
+const { Template } = require('ejs');
 
 router.use((req, res, next) => {
   if (!req.session.userID) {
@@ -10,7 +11,8 @@ router.use((req, res, next) => {
 });
 
 router.get('/new', (req, res) => {
-  res.render('new_story');
+  const templateVars = {userName: req.session.userName}
+  res.render('new_story', templateVars);
 });
 
 router.post('/save/:publish', (req, res) => {

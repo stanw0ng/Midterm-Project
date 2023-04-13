@@ -1,17 +1,20 @@
-<%- include('partials/_header', {title: "Log In - Story Maker"}); %>
+<%- include('partials/_header', {title: "Log In - Open Book"}); %>
 
-<h2>Log In</h2>
 
-<main>
+<div class="container centered">
 
-  <form method="POST" action="/login">
-    <label for="email">Email Address</label>
-    <input type="email" name="email">
-    <label for="password">Password</label>
-    <input type="password" name="password" autofill="false">
-    <button type="submit">Log In</button>
-  </form>
+  <main class="registry">
+    <h2>Log Into Open Book</h2>
+    <form method="POST" action="/login">
+      <label for="email">Email Address</label>
+      <input type="email" name="email">
+      <label for="password">Password</label>
+      <input type="password" name="password" autofill="false">
+      <button type="submit">Log In</button>
+    </form>
 
-</main>
+  </main>
+
+</div>
 
 <%- include('partials/_footer'); %>

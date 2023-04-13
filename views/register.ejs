@@ -1,9 +1,9 @@
-<%- include('partials/_header', {title: "Register - Story Maker"}); %>
+<%- include('partials/_header', {title: "Register - Open Book"}); %>
 
-<h2>Register</h2>
+<div class="container centered">
 
-<main>
-
+<main class = "registry">
+  <h2>Register to Open Book</h2>
   <form method="POST" action="/register">
     <label for="name">Name</label>
     <input type="text" name="name" maxlength="30">
@@ -13,7 +13,8 @@
     <input type="password" name="password" autofill="false">
     <button type="submit">Register</button>
   </form>
-
 </main>
+
+</div>
 
 <%- include('partials/_footer'); %>

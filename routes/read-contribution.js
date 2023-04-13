@@ -7,6 +7,11 @@ router.get("/:id", (req, res) => {
 
   queries.getContributionChapter(contributionId)
     .then(result => {
+
+      if(!Object.keys(result).length) {
+        return res.render('error_page', { message: err });
+      }
+
       const templateVars = result;
 
       templateVars.id = contributionId;
@@ -17,10 +22,6 @@ router.get("/:id", (req, res) => {
 
 
       res.render('contribution_page', templateVars);
-    })
-    .catch(err => {
-      // TODO: res.redirect('error_page', {err});
-      res.render('read', result);
     });
 });
 

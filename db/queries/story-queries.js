@@ -7,6 +7,8 @@ const getStories = (limit = 10) => {
   stories.description, stories.category, stories.genre, stories.age_rating, stories.completed, users.name
   FROM stories
   JOIN users ON users.id = stories.author_id
+  JOIN chapters ON stories.chapter_id = chapters.id
+  WHERE chapters.published IS TRUE
   ORDER BY date_created DESC LIMIT $1;
   `, [limit])
     .then(user => {
@@ -19,7 +21,10 @@ const getStories = (limit = 10) => {
 
 // fetches all stories created by current user
 const getMyStories = (userId) => {
-  return db.query('SELECT * FROM stories JOIN users ON author_id = users.id WHERE email = $1', [userId])
+  return db.query(`SELECT stories.*, chapters.published FROM stories
+  JOIN users ON stories.author_id = users.id
+  JOIN chapters ON stories.chapter_id = chapters.id
+  WHERE users.email = $1;`, [userId])
     .then(res => {
      return res.rows;
     })

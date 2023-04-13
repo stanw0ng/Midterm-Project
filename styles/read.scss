@@ -54,3 +54,24 @@
   font-size: 1em;
   font-style: italic;
 }
+
+#my-stories-cards {
+  width: 90%;
+
+  h2, h3, h4 {
+    margin: 0.5em;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    padding: 0%;
+    margin: 10px;
+  }
+  li {
+    list-style-type: none;
+  }
+}

@@ -25,12 +25,62 @@
       </div>
   </section>
   <section class = 'my-stories half'>
-    <h2>My Stories</h2>
-    <ul>
+    <h1>My Stories</h1>
+
+    <div class="card-box" id="my-stories-cards">
       <% myStories.forEach(story => { %>
-        <li><a href="/read/<%= story.id %>"><%= story.story_title %></a></li>
-      <% }); %>
+        <div class="story-card">
+          <h2>
+          <%= story.story_title %>
+        </h2>
+        <h4 class = 'description'><%= story.description %></h4>
+        <p>
+          This story has been published and is visible to the putlic.
+        </p>
+        <ul>
+          <li><a href="/read/<%= story.id %>">Read</a></li>
+          <li><a href="/edit/<%= story.id %>">Edit</a></li>
+          <li>
+            <form method="POST" action="/manage/delete/<%= story.id %>">
+              <button type="submit" class="danger">Delete</button>
+            </form>
+          </li>
+        </ul>
+        <ul>
+          <li>
+        <p>
+        <% if (story.published) { %>
+          This story has been published and is visible to the public.<br>Unpublish it to hide it from public view.</p></li>
+          <li><form method="POST" action="/manage/publish/<%= story.chapter_id %>/false">
+            <button type="submit" class="danger">Unpublish</button>
+          </form>
+        <% } else { %>
+          This story has not yet been published.<br>Publish it to make it visible to the public.</p></li>
+          <li><form method="POST" action="/manage/publish/<%= story.chapter_id %>/true">
+            <button type="submit" class="danger">Publish</button>
+          </form>
+        <% } %>
+      </li>
+      </ul>
+      <ul>
+        <li>
+        <p>
+        <% if (story.completed) { %>
+          This story is completed and/or closed to further contributions.<br>Open it again to contributions.</p></li>
+          <li><form method="POST" action="/manage/close/<%= story.id %>/false">
+            <button type="submit" class="danger">Open</button>
+          </form>
+        <% } else { %>
+          This story is open to contributions.<br>Close it to prevent further contributions.</p></li>
+          <li><form method="POST" action="/manage/close/<%= story.id %>/true">
+            <button type="submit" class="danger">Close</button>
+          </form>
+        <% } %>
+      </li>
     </ul>
+        </div>
+      <% }); %>
+      </div>
   </section>
 </div>
 

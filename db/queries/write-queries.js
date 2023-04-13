@@ -63,7 +63,7 @@ const saveExistingStory = (draft_id, author_email, chapter) => {
     });
 };
 
-const discardStoryDraft = (draft_id) => {
+const deleteStory = (draft_id) => {
   return db.query(`DELETE FROM stories WHERE id = $1`, [draft_id])
     .then(() => {
       return true;
@@ -73,4 +73,4 @@ const discardStoryDraft = (draft_id) => {
     });
 };
 
-module.exports = { saveNewStory, saveExistingStory, discardStoryDraft };
+module.exports = { saveNewStory, saveExistingStory, deleteStory };

@@ -26,6 +26,8 @@ router.get("/:id", (req, res) => {
 
       const upvoted = upvotes.includes(Number(contributionId));
 
+      console.log(chapter)
+
       const templateVars = chapter;
       templateVars.id = contributionId;
       templateVars.authorView = chapter.author_email === req.session.userID;
@@ -34,6 +36,9 @@ router.get("/:id", (req, res) => {
       templateVars.userName = req.session.userName;
       templateVars.upvotes = totalUpvotes;
       templateVars.upvoted = upvoted;
+      templateVars.story_id = chapter.story_id;
+
+      console.log(templateVars)
 
       res.render('contribution_page', templateVars);
 

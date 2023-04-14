@@ -4,7 +4,7 @@ const userDb = require('./user-queries.js');
 const getUser = userDb.getUserByEmail;
 
 const getContributionChapter = (contributionId) => {
-  return db.query(`SELECT story.story_title as story_title, author.name as author_name, author.email as author_email, chapters.title as chapter_title, contributor.name as contributor_name, contributor.email as contributor_email, contributions.date_created as publish_date, chapters.body
+  return db.query(`SELECT story.story_title as story_title, story.id as story_id, author.name as author_name, author.email as author_email, chapters.title as chapter_title, contributor.name as contributor_name, contributor.email as contributor_email, contributions.date_created as publish_date, chapters.body
   FROM contributions
   JOIN users contributor ON contributions.contributor_id = contributor.id
   JOIN stories story ON contributions.story_id = story.id

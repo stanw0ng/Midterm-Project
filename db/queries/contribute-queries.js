@@ -91,9 +91,10 @@ const createNewContribution = (contribution) => {
 
 };
 
-const saveContributionDraft = (draft_id, contribution) => {
+const saveContributionDraft = (draft_id, chapter) => {
+  const chapter_title = chapter.title ? chapter.title : "Chapter";
   return db.query(`UPDATE chapters SET (title, body, published) = ($1, $2, $3) WHERE id = (SELECT chapter_id FROM contributions WHERE id = $4) RETURNING *;`,
-    [contribution.title, contribution.body, contribution.published, draft_id])
+    [chapter_title, chapter.body, chapter.published, draft_id])
     .then((result) => {
       if (!result.rows.length) {
         throw new Error("Could not find chapter ID to update.");
@@ -103,8 +104,9 @@ const saveContributionDraft = (draft_id, contribution) => {
 };
 
 const updateContribution = (contributionID, chapter) => {
+  const chapter_title = chapter.title ? chapter.title : "Chapter";
   return db.query(`UPDATE chapters SET (title, body) = ($1, $2) WHERE id = (SELECT chapter_id FROM contributions WHERE id = $3) RETURNING *;`,
-    [chapter.title, chapter.body, contributionID])
+    [chapter_title, chapter.body, contributionID])
     .then((result) => {
       if (!result.rows.length) {
         throw new Error("Could not find chapter ID to update.");

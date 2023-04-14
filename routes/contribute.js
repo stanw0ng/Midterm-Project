@@ -104,8 +104,9 @@ router.post('/discard/', (req, res) => {
     });
 });
 
-router.post('/delete/', (req, res) => {
-  contributeQueries.deleteContribution(draftID)
+router.post('/delete/:id', (req, res) => {
+  const contributionID = req.params.id;
+  contributeQueries.deleteContribution(contributionID)
     .then(() => {
       res.redirect(req.get('referer'));
     })

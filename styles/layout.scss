@@ -27,6 +27,12 @@ a:active {
 
 button {
   color: variables.$link-normal;
+  font-size: .5em
+}
+
+button:hover {
+  color: variables.$link-highlighted;
+  cursor: pointer;
 }
 
 .mb-20 {

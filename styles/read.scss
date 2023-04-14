@@ -5,10 +5,10 @@
   flex-grow: 1;
 }
 
-.half {
+.third {
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  width: 33.33vw;
   align-items: center;
   justify-content: center;
   color: variables.$text-normal;
@@ -22,11 +22,12 @@
 }
 
 .my-stories {
-  background-color: variables.$background-light;
+  background-color: variables.$background-dark;
 }
 
 .card-box {
   display: flex;
+  width: 90%;
   flex-direction: column;
   gap: 1em;
   align-items: center;
@@ -48,6 +49,13 @@
 .story-card p{
   font-size: 1em;
   margin: .25em 0;
+}
+
+.story-card-top {
+display: flex;
+width: 100%;
+align-items: center;
+justify-content: space-between;
 }
 
 .story-card .description{
@@ -74,4 +82,47 @@
   li {
     list-style-type: none;
   }
+}
+
+.my-contributions {
+  display: flex;
+  flex-direction: column;
+}
+
+.contribution-box{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  align-items: center;
+  gap: 1em;
+}
+
+.contribution-card{
+  display: flex;
+  align-items: center;
+  border: 1px;
+  border: 1px solid;
+  padding: 0 1.5em;
+  width: 100%;
+  justify-content: center;
+}
+
+.contribution-card li {
+    list-style-type: none;
+  }
+
+  .contribution-card a {
+    font-size: 1.5em;
+  }
+
+.methods {
+  display: flex;
+  flex-direction: column;
+  font-size: 1em;
+  align-items: center;
+  gap: .5em;
+}
+
+.contribution-action{
+  align-items: center;
 }

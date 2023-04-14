@@ -3,7 +3,7 @@
   <main id="story-editor">
     <h2>New Contribution</h2>
     <% if(lastChapter) { %>
-    <form method="POST" id="draft" action="/contribute/<%= storyInfo.id %>/<%= lastWinnerID %>">
+    <form method="POST" id="draft" action="/contribute/<%= storyInfo.id %>/<%= lastChapter.winner_id %>">
       <% } else { %>
         <form method="POST" id="draft" action="/contribute/<%= storyInfo.id %>/null">
       <% }; %>
@@ -15,9 +15,9 @@
       </div>
       <div>
         <% if(lastChapter) { %>
-        <h4 id="previous-chapter">Previous chapter: <%= lastChapter.lastWinner %>
+        <h4 id="previous-chapter">Previous chapter: <%= lastChapter.chapter_title %>
         </h4>
-        <h4 id="chapter-author">By: <%= lastChapter.winnerAuthor %>
+        <h4 id="chapter-author">By: <%= lastChapter.contributor_name %>
         </h4>
         <% } else { %>
           <h4 id="previous-chapter">Previous chapter: <%= storyInfo.chapter_title %>

@@ -40,9 +40,7 @@ const getStoryData = (storyID => {
 });
 
 const getLatestWinnerData = (storyID) => {
-  const output = {
-    id: storyID
-  };
+
   return db.query(`SELECT contributions.id as winner_id, contributor.name as contributor_name, chapters.title as chapter_title
   FROM contributions
   JOIN users contributor ON contributions.contributor_id = contributor.id

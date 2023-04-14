@@ -34,7 +34,7 @@ const credentialRoutes = require('./routes/credentials');
 const usersRoutes = require('./routes/user');
 const newStoryRoutes = require('./routes/new-story');
 const storyManageRoutes = require('./routes/my-story');
-const contributionRoutes = require('./routes/new-contribution');
+const contributionRoutes = require('./routes/contribute');
 const readRoutes = require('./routes/read');
 const readContributionRoutes = require('./routes/read-contribution');
 

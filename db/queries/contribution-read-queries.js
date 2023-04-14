@@ -39,6 +39,7 @@ const getContributionsByTitle = (storyTitle) => {
 };
 
 const approveContribution = (entryID, userEmail) => {
+  console.log(entryID, userEmail);
   return getUser(userEmail)
     .then(user => {
       const userID = user.id;

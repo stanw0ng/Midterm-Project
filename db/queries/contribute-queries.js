@@ -1,7 +1,7 @@
 const db = require('../connection');
-const userDb = require('./user-queries.js');
+const userQueries = require('./user-queries.js');
 
-const getContributorID = userDb.getUserByEmail;
+const getContributorID = userQueries.getUserByEmail;
 
 const insertNewChapter = (chapter) => {
   return db.query(`INSERT INTO chapters (title, body, published) VALUES ($1, $2, $3) RETURNING id`, chapter)
@@ -9,7 +9,6 @@ const insertNewChapter = (chapter) => {
       return chapter.rows[0].id;
     });
 };
-
 
 const insertNewContribution = (contributorID, chapterID, storyID) => {
   return db.query(`INSERT INTO contributions (story_id, contributor_id, chapter_id) VALUES ($1, $2, $3) RETURNING id`,
@@ -51,6 +50,21 @@ const getLatestWinnerData = (storyID) => {
     });
 };
 
+const getChapterData = (contributionID) => {
+  return db.query(`SELECT parent_author.name as parent_name, story_author.name as author_name, stories.story_title, chapters.title as chapter_title
+  FROM contributions
+  JOIN chapter_relationships ON chapter_relationships.child_id = contributions.id
+  LEFT JOIN contributions parent ON chapter_relationships.parent_id = parent.id
+  LEFT JOIN users parent_author ON parent_author.id = parent.contributor_id
+  LEFT JOIN chapters ON chapters.id = parent.chapter_id
+  JOIN stories ON stories.id = chapter_relationships.story_id
+  JOIN users story_author ON stories.author_id = story_author.id
+  WHERE contributions.id = $1;`, [contributionID])
+    .then(chapterInfo => {
+      return chapterInfo.rows[0];
+    });
+};
+
 const createNewContribution = (contribution) => {
   let contributorID = null;
 
@@ -88,6 +102,17 @@ const saveContributionDraft = (draft_id, contribution) => {
     });
 };
 
+const updateContribution = (contributionID, chapter) => {
+  return db.query(`UPDATE chapters SET (title, body) = ($1, $2) WHERE id = (SELECT chapter_id FROM contributions WHERE id = $3) RETURNING *;`,
+    [chapter.title, chapter.body, contributionID])
+    .then((result) => {
+      if (!result.rows.length) {
+        throw new Error("Could not find chapter ID to update.");
+      }
+      return true;
+    });
+};
+
 const discardContribution = (draft_id) => {
   return db.query(`DELETE FROM contributions WHERE id = $1`, [draft_id])
     .then(() => {
@@ -98,4 +123,4 @@ const discardContribution = (draft_id) => {
     });
 };
 
-module.exports = { createNewContribution, saveContributionDraft, discardContribution, getLatestWinnerData };
+module.exports = { createNewContribution, saveContributionDraft, discardContribution, getLatestWinnerData, getChapterData, updateContribution };

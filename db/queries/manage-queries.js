@@ -51,4 +51,8 @@ const updateStory = (story, chapter) => {
     });
 };
 
+const getChapterData = (contributionID) => {
+  return db.query(`SELECT `)
+}
+
 module.exports = { setPublishedChapter, setCloseStory, getStoryData, updateStory };

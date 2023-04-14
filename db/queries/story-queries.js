@@ -26,7 +26,7 @@ const getMyStories = (userId) => {
   JOIN chapters ON stories.chapter_id = chapters.id
   WHERE users.email = $1;`, [userId])
     .then(res => {
-     return res.rows;
+      return res.rows;
     })
     .catch(err => {
       return null;
@@ -43,7 +43,7 @@ const getRootChapter = (storyId) => {
   WHERE stories.id = $1
   `, [storyId])
     .then(res => {
-     return res.rows[0];
+      return res.rows[0];
     })
     .catch(err => {
       return null;
@@ -61,13 +61,13 @@ const getChildrenChapters = (storyId) => {
   WHERE stories.id = $1
   ORDER BY winners.child_id
   `, [storyId])
-  .then(chapters => {
-    return chapters.rows;
-  })
-  .catch(err => {
-    return null;
-  });
-}
+    .then(chapters => {
+      return chapters.rows;
+    })
+    .catch(err => {
+      return null;
+    });
+};
 
 const getChapterData = (contributionsId) => {
   return db.query(`
@@ -97,6 +97,16 @@ const getChapter = (chapter_id) => {
     });
 };
 
+const getChapterFromContribution = (contribution_id) => {
+  return db.query(`SELECT chapters.title as chapter_title, chapters.body as chapter_text
+  FROM chapters
+  JOIN contributions ON contributions.chapter_id = chapters.id
+  WHERE contributions.id = $1`, [contribution_id])
+    .then(result => {
+      return result.rows[0];
+    });
+};
+
 const getBookmarkedStories = (user_id) => {
   return db.query(`SELECT stories.* FROM stories JOIN bookmarks ON stories.id = bookmarks.story_id WHERE bookmarks.user_id = $1`, [user_id]);
 };
@@ -111,12 +121,12 @@ const getStoryContributions = (story_id) => {
 
 const getStoryStatus = (story_id) => {
   return db.query(`SELECT stories.completed FROM stories WHERE id = $1`, [story_id])
-  .then(contributions => {
-    return contributions.rows;
-  })
-  .catch(err => {
-    return null;
-  });
+    .then(contributions => {
+      return contributions.rows;
+    })
+    .catch(err => {
+      return null;
+    });
 };
 
 const getContributionsById = (storyId) => {
@@ -130,12 +140,12 @@ const getContributionsById = (storyId) => {
   WHERE stories.id = $1
   GROUP BY contributions_id, chapters.title, users.name
   `, [storyId])
-  .then(contributions => {
-    return contributions.rows;
-  })
-  .catch(err => {
-    return null;
-  });
+    .then(contributions => {
+      return contributions.rows;
+    })
+    .catch(err => {
+      return null;
+    });
 };
 
-module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions,  getStoryContributions, getStoryStatus, getContributionsById };
+module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions, getStoryContributions, getStoryStatus, getContributionsById, getChapterFromContribution };

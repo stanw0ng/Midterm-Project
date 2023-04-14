@@ -5,7 +5,7 @@
       <% if (storyStatus[0].completed===true) { %>
         <div class="contribution stop">The story is complete, nothing more to say!</div>
         <% } else { %>
-          <div class="contribution plus">+ Add Contribution</div>
+          <div class="contribution plus" id="plus-card" name="<%= storyId %>">+ Add Contribution</div>
           <% } %>
             <% contributions.forEach(contribution=> { %>
               <div class="contribution entry" data-contribution-id="<%= contribution.contributions_id %>">
@@ -37,43 +37,6 @@
     </div>
   </div>
 
-  <script>
-    $(document).ready(function() {
-
-      $('.plus').click(function() {
-        window.location.href = `/contribute/<%= storyId %>`;
-      });
-
-      $('.entry').click(function(event) {
-        if ($(this).hasClass('stop')) {
-          event.preventDefault();
-        } else {
-          const contributionID = $(this).attr('data-contribution-id');
-          window.location.href = `/contribution/${contributionID}`;
-        }
-      });
-
-      const $button = $('.upvote-btn');
-      $button.click(function() {
-        event.stopPropagation();
-        //Make a reference to the button we push
-        const $thisButton = $(this);
-        const upvoteID = $thisButton.attr('data-contribution-id');
-
-        $.post(`/read/upvote/`, { upvoteID }, function(upvotes, status) {
-          if (upvotes !== undefined) {
-            const tail = upvotes === 1 ? 'Upvote' : 'Upvotes';
-
-            //Get button's HTML
-            const label = $thisButton.html();
-            $thisButton.html(label === "Upvote" ? "Upvoted" : "Upvote");
-
-            $(`#${upvoteID}`).html(`${upvotes} ${tail}`);
-          }
-        });
-      });
-
-    });
-  </script>
+  <script type="text/javascript" src="/scripts/contribution-card.js"></script>
 
   <%- include('partials/_footer'); %>

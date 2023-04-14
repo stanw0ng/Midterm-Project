@@ -38,7 +38,7 @@ const getLatestWinnerData = (storyID) => {
   JOIN chapters ON contributions.chapter_id = chapters.id
   JOIN stories ON contributions.story_id = stories.id
   JOIN users author ON stories.author_id = author.id
-  WHERE contributions.id = (SELECT child_id FROM chapter_relationships WHERE story_id = $1 ORDER BY child_id DESC LIMIT 1);`, [storyID])
+  WHERE contributions.id = (SELECT child_id FROM winners WHERE story_id = $1 ORDER BY child_id DESC LIMIT 1);`, [storyID])
     .then(result => {
       const data = result.rows[0];
       output.storyTitle = data.story_title,

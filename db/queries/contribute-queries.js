@@ -113,7 +113,7 @@ const updateContribution = (contributionID, chapter) => {
     });
 };
 
-const discardContribution = (draft_id) => {
+const deleteContribution = (draft_id) => {
   return db.query(`DELETE FROM contributions WHERE id = $1`, [draft_id])
     .then(() => {
       return true;
@@ -123,4 +123,4 @@ const discardContribution = (draft_id) => {
     });
 };
 
-module.exports = { createNewContribution, saveContributionDraft, discardContribution, getLatestWinnerData, getChapterData, updateContribution };
+module.exports = { createNewContribution, saveContributionDraft, deleteContribution, getLatestWinnerData, getChapterData, updateContribution };

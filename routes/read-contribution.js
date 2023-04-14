@@ -50,7 +50,7 @@ router.post("/delete/", (req, res) => {
     })
     .catch(err => {
       console.log(err);
-      // TODO: res.redirect('error_page', {err});
+      res.render('error_page', { message: err, userName: req.session.userName })
     });
 });
 
@@ -64,7 +64,7 @@ router.post("/approve/", (req, res) => {
     })
     .catch(err => {
       console.log(err);
-      // TODO: res.redirect('error_page', {err});
+      res.render('error_page', { message: err, userName: req.session.userName })
     });
 });
 

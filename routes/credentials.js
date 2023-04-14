@@ -35,10 +35,10 @@ router.post('/register', (req, res) => {
       console.log("Registration successful", user);
       req.session.userID = user.email;
       req.session.userName = user.name;
-      res.redirect('/user/profile');
+      res.redirect('/read');
     })
     .catch((err) => {
-      res.redirect('/register');
+      res.render('error_page', { message: err, userName: null });
     });
 });
 
@@ -47,14 +47,15 @@ router.post('/login', (req, res) => {
   const { email, password } = req.body;
   userQueries.getUserByEmail(email)
     .then((user) => {
-      let error = null;
+      console.log(user);
+      let err = null;
       if (!user || !bcryptjs.compareSync(password, user.hash)) {
-        error = "Invalid login or password.";
+        err = "Invalid login or password.";
       }
 
-      if (error) {
-        console.log(error);
-        return res.redirect('/login');
+      if (err) {
+        console.log(err);
+        return res.render('error_page', { message: err, userName: null });
       }
 
       console.log("Login successful");

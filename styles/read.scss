@@ -3,7 +3,6 @@
 .container {
   display: flex;
   flex-grow: 1;
-  height:calc(100vh - 6em);
 }
 
 .third {
@@ -11,8 +10,9 @@
   flex-direction: column;
   width: 33.33vw;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   color: variables.$text-normal;
+  height: calc(100vh-6em);
   overflow-y: scroll;
 }
 
@@ -20,7 +20,6 @@
   display: flex;
   gap: 1em;
   background-color: variables.$background-dark;
-  justify-content: center;
 }
 
 .my-stories {

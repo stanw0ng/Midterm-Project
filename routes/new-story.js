@@ -17,7 +17,7 @@ router.get('/new', (req, res) => {
 
 router.post('/save/:publish', (req, res) => {
   const data = req.body;
-  const publish = Boolean(req.params.publish);
+  const publish = req.params.publish === "true" ? true : false;
 
   const chapter = {
     title: data.chapterTitle,
@@ -33,10 +33,13 @@ router.post('/save/:publish', (req, res) => {
     rating: data.rating
   };
 
+  console.log(publish);
   if (!req.session.draftId) {
     return writeQueries.saveNewStory(req.session.userID, chapter, story)
     .then(id => {
-        req.session.draftId = id;
+        if(!publish) {
+          req.session.draftId = id;
+        }
         res.send(`New story saved`);
       })
       .catch((err) => {
@@ -45,6 +48,9 @@ router.post('/save/:publish', (req, res) => {
   }
   writeQueries.saveExistingStory(req.session.draftId, req.session.userID, chapter, story)
   .then(() => {
+    if(publish) {
+      req.session.draftId = null;
+    }
     return res.send(`Draft saved`);
   })
   .catch(() => {
@@ -55,11 +61,9 @@ router.post('/save/:publish', (req, res) => {
 
 router.post('/discard/', (req, res) => {
 
-  draftID = req.session.draftId;
-  req.session.draftId = null;
-
-  writeQueries.deleteStory(draftID)
-    .then(() => {
+  writeQueries.deleteStory(req.session.draftId)
+  .then(() => {
+      req.session.draftId = null;
       res.redirect('/read');
     });
 

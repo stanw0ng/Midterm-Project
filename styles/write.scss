@@ -1,5 +1,3 @@
-@use 'variables';
-
 #story-editor {
   display: flex;
   flex-direction: column;
@@ -7,13 +5,11 @@
   width: 60vw;
   padding: 20px;
 
+
   form {
     display: flex;
     flex-direction: column;
-    // align-items: center;
     width: 100%;
-    // justify-content: flex-start;
-    // flex-wrap: wrap;
   }
 
   textarea {
@@ -24,9 +20,9 @@
     height: 50vh;
     resize: none;
     background-color: transparent;
-    border: 2px dotted white;
+    border: 2px dotted variables.$text-normal;
     outline: none;
-    color: white;
+    color: variables.$text-normal;
   }
 
   textarea:hover {
@@ -47,8 +43,8 @@
     border: none;
     width: 100%;
     background-color: transparent;
-    color: white;
-    border-bottom: 4px solid white;
+    color: variables.$text-normal;
+    border-bottom: 4px solid variables.$text-normal;
     font-size: 1.5em;
   }
 
@@ -72,7 +68,7 @@
   }
 
   option {
-    color: rgb(107, 107, 107,);
+    color: variables.$text-normal;
     font-size: 1em;
   }
 
@@ -96,18 +92,9 @@
 button {
   border: none;
   font-size: 1.5em;
-  color: white;
+  color: variables.$text-normal;;
   background-color: transparent;
   text-decoration: underline;
-}
-
-button:hover {
-  color: rgb(107, 107, 107,);
-  cursor: pointer;
-}
-
-#discard-story:hover{
-  color: red;
 }
 
 #success {

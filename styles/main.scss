@@ -5,8 +5,6 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  background-color: #8B809E;
-  color: white;
 }
 
 nav {
@@ -15,7 +13,7 @@ nav {
   height: 6em;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 4px solid white;
+  border-bottom: 4px solid variables.$link-normal
 }
 
 .links {
@@ -60,14 +58,6 @@ nav {
   margin: 10px 0;
 }
 
-a {
- color: white;
-}
-
-a:visited {
-  color: white;
-}
-
 a:hover {
-  color: rgb(61, 61, 61);
+  color: variables.$link-highlighted
 }

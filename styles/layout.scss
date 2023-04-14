@@ -25,6 +25,10 @@ a:active {
   color: variables.$link-clicked;
 }
 
+button {
+  color: variables.$link-normal;
+}
+
 .mb-20 {
   margin-bottom: 20px;
 }

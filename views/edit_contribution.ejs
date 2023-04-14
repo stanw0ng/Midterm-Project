@@ -21,16 +21,23 @@
           <label for="chapterTitle">Chapter Title</label>
           <input type="text" name="chapterTitle" value="<%= chapterData.chapter_title %>">
           <%- include('partials/_text_editor', { body: chapterData.chapter_text }) %>
+          <footer>
+          <div>
+            <p>Letter count: <span id="letter-counter">0</span></p>
+            <p>Word count: <span id="word-counter">0</span></p>
+          </div>
             <div>
               <button id="update-story">Update</button>
               <button id="discard-changes">Discard Changes</button>
             </div>
+          </footer>
             <div id="success" class="hidden notification">
             </div>
             <div id="fail" class="hidden notification">
             </div>
     </form>
   </main>
+  <script type="text/javascript" src="/scripts/stats.js"></script>
   <script>
     $(document).ready(function() {
 

@@ -16,13 +16,19 @@
         </h4>
       </div>
       <label for="chapterTitle">Chapter Title</label>
-      <input type="text" name="chapterTitle">
+      <input type="text" name="chapterTitle" autocomplete="off">
       <%- include('partials/_text_editor', { body: "" }) %>
-        <div class = "action-buttons">
-          <button id="save-story">Save</button>
-          <button id="publish">Publish</button>
-          <button id="discard-story">Discard</button>
-        </div>
+        <footer>
+          <div>
+            <p>Letter count: <span id="letter-counter">0</span></p>
+            <p>Word count: <span id="word-counter">0</span></p>
+          </div>
+          <div>
+            <button id="save-story">Save</button>
+            <button id="publish">Publish</button>
+            <button id="discard-story">Discard</button>
+          </div>
+        </footer>
         <div id="success" class="hidden notification">
 
         </div>
@@ -33,7 +39,7 @@
     </form>
 
   </main>
-</div>
+  <script type="text/javascript" src="/scripts/stats.js"></script>
   <script type="text/javascript" src="/scripts/contribute.js"></script>
 
   <%- include('partials/_footer'); %>

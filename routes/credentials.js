@@ -43,6 +43,7 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
+
   const { email, password } = req.body;
   userQueries.getUserByEmail(email)
     .then((user) => {

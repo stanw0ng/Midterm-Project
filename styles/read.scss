@@ -3,6 +3,7 @@
 .container {
   display: flex;
   flex-grow: 1;
+  height:calc(100vh - 6em);
 }
 
 .third {
@@ -12,6 +13,7 @@
   align-items: center;
   justify-content: center;
   color: variables.$text-normal;
+  overflow-y: scroll;
 }
 
 .all-stories {

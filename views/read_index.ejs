@@ -30,10 +30,12 @@
     <div class="card-box" id="my-stories-cards">
       <% myStories.forEach(story => { %>
         <div class="story-card">
+          <div class = "story-card-top">
           <h2>
           <%= story.story_title %>
         </h2>
-        <h4 class = 'description'><%= story.description %></h4>
+        <h4 class = 'published date'>Published : <%= story.publish_date %></h4>
+        </div>
         <ul class = "methods">
           <li><a href="/read/<%= story.id %>">Read</a></li>
           <li><a href="/manage/edit/<%= story.id %>">Edit</a></li>

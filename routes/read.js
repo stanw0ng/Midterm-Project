@@ -1,17 +1,19 @@
-   const express = require('express');
+const express = require('express');
 const router  = express.Router();
 const storyQueries = require('../db/queries/story-queries');
 const helperQueries = require('../db/queries/helper-queries');
+const contributionQueries = require('../db/queries/contribution-read-queries');
 
 // renders read splash page
 router.get("/", (req, res) => {
+  const getMyContributionsPromise = contributionQueries.getMyContributions(req.session.userID);
   const allStoriesPromise = storyQueries.getStories();
   const myStoriesPromise = storyQueries.getMyStories(req.session.userID);
 
-  Promise.all([allStoriesPromise, myStoriesPromise])
+  Promise.all([allStoriesPromise, myStoriesPromise, getMyContributionsPromise])
     .then(data => {
-      const [allStories, myStories] = data;
-      const templateVars = { allStories, myStories, userName: req.session.userName };
+      const [allStories, myStories, myContributions] = data;
+      const templateVars = { allStories, myStories, userName: req.session.userName, myContributions };
       console.log(templateVars)
       return res.render("read_index", templateVars);
     })

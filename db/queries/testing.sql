@@ -134,7 +134,8 @@
 -- JOIN chapters ON stories.chapter_id = chapters.id
 -- WHERE stories.id = $1
 
-SELECT stories.*, TO_CHAR(stories.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, chapters.published FROM stories
-  JOIN users ON stories.author_id = users.id
-  JOIN chapters ON stories.chapter_id = chapters.id
-  WHERE users.email = 'blood.is.life@vamp.com'
+SELECT chapters.*
+FROM contributions
+JOIN chapters ON chapters.id = contributions.chapter_id
+WHERE contributions.contributor_id = 1
+

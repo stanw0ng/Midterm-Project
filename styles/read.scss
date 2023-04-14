@@ -51,6 +51,13 @@
   margin: .25em 0;
 }
 
+.story-card-top {
+display: flex;
+width: 100%;
+align-items: center;
+justify-content: space-between;
+}
+
 .story-card .description{
   font-size: 1em;
   font-style: italic;

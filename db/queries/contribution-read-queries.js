@@ -72,4 +72,25 @@ const deleteContribution = (entry_id) => {
     });
 };
 
-module.exports = { getContributionChapter, getContributionsByTitle, approveContribution, deleteContribution };
+
+const getMyContributions = (userEmail) => {
+  let userID = null;
+  return getUser(userEmail)
+    .then(user => {
+      userID = user.id;
+      return db.query(`
+      SELECT chapters.*
+      FROM contributions
+      JOIN chapters ON chapters.id = contributions.chapter_id
+      WHERE contributions.contributor_id = $1
+      `, [userID])
+      .then(contributions => {
+        return contributions.rows;
+      })
+      .catch(err => {
+        return null;
+      });
+    });
+};
+
+module.exports = { getContributionChapter, getContributionsByTitle, approveContribution, deleteContribution, getMyContributions };

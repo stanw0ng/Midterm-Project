@@ -134,8 +134,4 @@
 -- JOIN chapters ON stories.chapter_id = chapters.id
 -- WHERE stories.id = $1
 
-SELECT chapters.*
-FROM contributions
-JOIN chapters ON chapters.id = contributions.chapter_id
-WHERE contributions.contributor_id = 1
 

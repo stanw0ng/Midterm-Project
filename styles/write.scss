@@ -86,9 +86,19 @@
 }
 
 .action-buttons {
+  margin: 2em 0 1em 0;
   display: flex;
   width: 100%;
   justify-content: space-around;
+}
+
+.counters{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  gap: 3em;
 }
 
 button {

@@ -13,7 +13,6 @@
 
 .contribution {
   display: flex;
-  padding: 1em;
   flex-direction: column;
   border: 1px solid variables.$text-normal;
   height: 15em;
@@ -21,6 +20,19 @@
   justify-content: center;
   align-items: center;
   gap: .5em;
+  text-align: center;
+}
+
+.winner{
+  text-decoration: underline;
+}
+
+.pub-date{
+  font-size: .75em;
+}
+
+.upvote-btn{
+  font-size: 1em;
 }
 
 .plus {
@@ -35,11 +47,12 @@
 
 
 .stop:hover {
-  color: red;
-  border: 1px solid red;
+  color: variables.$link-highlighted;
+  border: 1px solid variables.$link-highlighted;
   cursor: pointer;
 }
 
 .contribution.stop {
   display: flex;
+  text-align: center;
 }

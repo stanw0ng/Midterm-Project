@@ -22,7 +22,7 @@
 }
 
 .my-stories {
-  background-color: variables.$background-light;
+  background-color: variables.$background-dark;
 }
 
 .card-box {
@@ -121,4 +121,8 @@ justify-content: space-between;
   font-size: 1em;
   align-items: center;
   gap: .5em;
+}
+
+.contribution-action{
+  align-items: center;
 }

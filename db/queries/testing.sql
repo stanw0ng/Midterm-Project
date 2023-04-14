@@ -129,26 +129,7 @@
 -- JOIN chapters ON stories.chapter_id = chapters.id
 -- WHERE users.email = $1;
 
--- SELECT stories.story_title, stories.description, stories.category, stories.genre, stories.age_rating, chapters.title as chapter_title, chapters.body
--- FROM stories
--- JOIN chapters ON stories.chapter_id = chapters.id
--- WHERE stories.id = $1
-
-SELECT contributions.id as post_id, contributor.name as contributor_name, chapters.title as chapter_title, stories.story_title, author.name as author
-  FROM contributions
-  JOIN users contributor ON contributions.contributor_id = contributor.id
-  JOIN chapters ON contributions.chapter_id = chapters.id
-  JOIN stories ON contributions.story_id = stories.id
-  JOIN users author ON stories.author_id = author.id
-  WHERE contributions.id = 2;
-
-
-SELECT parent_author.name as parent_name, story_author.name as author_name, stories.story_title, chapters.title as chapter_title
-FROM contributions
-JOIN chapter_relationships ON chapter_relationships.child_id = contributions.id
-LEFT JOIN contributions parent ON chapter_relationships.parent_id = parent.id
-LEFT JOIN users parent_author ON parent_author.id = parent.contributor_id
-LEFT JOIN chapters ON chapters.id = parent.chapter_id
-JOIN stories ON stories.id = chapter_relationships.story_id
-JOIN users story_author ON stories.author_id = story_author.id
-WHERE contributions.id = 3;
+SELECT stories.story_title, stories.description, stories.category, stories.genre, stories.age_rating, chapters.title as chapter_title, chapters.body
+FROM stories
+JOIN chapters ON stories.chapter_id = chapters.id
+WHERE stories.id = $1

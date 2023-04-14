@@ -1,4 +1,5 @@
 <%- include('partials/_header', {title: "Write Contribution - Story Maker" }); %>
+<div class="container centered">
   <main id="story-editor">
     <h2>New Contribution</h2>
     <form method="POST" id="draft" action="/contribute/<%= id %>/<%= lastWinnerID %>">
@@ -17,7 +18,7 @@
       <label for="chapterTitle">Chapter Title</label>
       <input type="text" name="chapterTitle">
       <%- include('partials/_text_editor', { body: "" }) %>
-        <div>
+        <div class = "action-buttons">
           <button id="save-story">Save</button>
           <button id="publish">Publish</button>
           <button id="discard-story">Discard</button>
@@ -32,6 +33,7 @@
     </form>
 
   </main>
+</div>
   <script type="text/javascript" src="/scripts/contribute.js"></script>
 
   <%- include('partials/_footer'); %>

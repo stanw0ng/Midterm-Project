@@ -58,4 +58,4 @@ That I scarce was sure I heard you”—here I opened wide the door;—
             Darkness there and nothing more.', false);
 
 /* new entry */
-INSERT INTO chapters (title, body) VALUES ('Chapter IV. Jonathan Harker''s Journal', '8 May. I am learning how to code');
+INSERT INTO chapters (title, body, published) VALUES ('Chapter IV. Jonathan Harker''s Journal', '8 May. I am learning how to code', true);

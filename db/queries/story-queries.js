@@ -55,11 +55,9 @@ const getChildrenChapters = (storyId) => {
   return db.query(`
   SELECT winners.child_id, chapters.title
   FROM winners
-  JOIN stories ON winners.story_id = stories.id
   JOIN contributions ON winners.child_id = contributions.id
   JOIN chapters ON contributions.chapter_id = chapters.id
-  WHERE stories.id = $1
-  ORDER BY winners.child_id
+  WHERE winners.story_id = $1
   `, [storyId])
     .then(chapters => {
       return chapters.rows;
@@ -148,4 +146,18 @@ const getContributionsById = (storyId) => {
     });
 };
 
-module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions, getStoryContributions, getStoryStatus, getContributionsById, getChapterFromContribution };
+const getWinnersByStoryId = (storyId) => {
+  return db.query(`
+  SELECT winners.child_id
+  FROM winners
+  WHERE story_id = $1
+  `, [storyId])
+  . then(winners => {
+    return winners.rows;
+  })
+  .catch(err => {
+    return null;
+  });
+};
+
+module.exports = { getStories, getMyStories, getRootChapter, getChildrenChapters, getChapterData, getChapter, getBookmarkedStories, getUserContributions, getStoryContributions, getStoryStatus, getContributionsById, getWinnersByStoryId, getChapterFromContribution };

@@ -95,18 +95,24 @@ router.post('/:storyID/:winner/:draftID/:publish', (req, res) => {
 });
 
 router.post('/discard/', (req, res) => {
-  if (!req.session.draftId) {
-    return res.send(true);
-  }
-
-  draftID = req.session.draftId;
-  req.session.draftId = null;
-
-  contributeQueries.discardContribution(draftID)
+  contributeQueries.deleteContribution(draftID)
     .then(() => {
       res.send(true);
+    })
+    .catch(() => {
+      res.send(false);
     });
+});
 
+router.post('/delete/:id', (req, res) => {
+  const contributionID = req.params.id;
+  contributeQueries.deleteContribution(contributionID)
+    .then(() => {
+      res.redirect(req.get('referer'));
+    })
+    .catch(() => {
+      res.render('error_page', { message: "Couldn't delete contribution. Please try again.", userName: req.session.userName });
+    });
 });
 
 module.exports = router;

@@ -15,7 +15,7 @@ router.post('/delete/:id', (req, res) => {
 
   writeQueries.deleteStory(storyID)
     .then(() => {
-      res.redirect('/read');
+      res.redirect(req.get('referer'));
     });
 });
 

@@ -41,7 +41,11 @@ $(document).ready(function() {
 
   $('#discard-story').on('click', function() {
     $notifications.slideUp();
-    $.post('/contribution/discard/', function(result, status) {
+    if(!id){
+      window.location.href = "/read";
+      return;
+    }
+    $.post(`/contribute/discard/${id}`, function(result, status) {
       if (result) {
         window.location.href = "/read";
         return;

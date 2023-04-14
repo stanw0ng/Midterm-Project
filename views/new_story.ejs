@@ -7,15 +7,15 @@
 
       <!-- This will be the page where the users will write their new story -->
       <form method="POST" id="draft" action="/story/new">
-        <div class = "variations">
-        <label for="storyTitle">Story Title:</label>
-        <input type="text" name="storyTitle" id="story-title" required aria-required="true">
+        <div class="variations">
+          <label for="storyTitle">Story Title:</label>
+          <input type="text" name="storyTitle" id="story-title" autocomplete="off">
 
-        <label for="description">Description:</label>
-        <input type="text" name="description">
+          <label for="description">Description:</label>
+          <input type="text" name="description" autocomplete="off">
 
-        <label for="chapterTitle">Chapter Title:</label>
-        <input type="text" name="chapterTitle">
+          <label for="chapterTitle">Chapter Title:</label>
+          <input type="text" name="chapterTitle" autocomplete="off">
 
           <label for="category">Category:</label>
           <select name="category">
@@ -44,11 +44,17 @@
           </select>
         </div>
         <%- include('partials/_text_editor', { body: "" }) %>
-          <div class = "action-buttons">
-            <button id="save-story">Save</button>
-            <button id="publish">Publish</button>
-            <button id="discard-story">Discard</button>
-          </div>
+          <footer>
+            <div>
+              <p>Letter count: <span id="letter-counter">0</span></p>
+              <p>Word count: <span id="word-counter">0</span></p>
+            </div>
+            <div class="action-buttons">
+              <button id="save-story">Save</button>
+              <button id="publish">Publish</button>
+              <button id="discard-story">Discard</button>
+            </div>
+          </footer>
           <div id="success" class="hidden notification">
 
           </div>
@@ -60,7 +66,7 @@
 
     </main>
   </div>
-
+  <script type="text/javascript" src="/scripts/stats.js"></script>
   <script type="text/javascript" src="/scripts/new.js"></script>
 
   <%- include('partials/_footer'); %>

@@ -2,7 +2,7 @@
 
 <div class = 'container'>
   <section class = 'all-stories half'>
-    <h2>All Stories</h2>
+    <h1>All Stories</h1>
 
       <div class="card-box">
       <% allStories.forEach(story => { %>
@@ -34,7 +34,7 @@
           <%= story.story_title %>
         </h2>
         <h4 class = 'description'><%= story.description %></h4>
-        <ul>
+        <ul class = "methods">
           <li><a href="/read/<%= story.id %>">Read</a></li>
           <li><a href="/manage/edit/<%= story.id %>">Edit</a></li>
           <li>

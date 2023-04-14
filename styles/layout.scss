@@ -29,6 +29,11 @@ button {
   color: variables.$link-normal;
 }
 
+button:hover {
+  color: variables.$link-highlighted;
+  cursor: pointer;
+}
+
 .mb-20 {
   margin-bottom: 20px;
 }

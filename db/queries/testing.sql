@@ -129,7 +129,12 @@
 -- JOIN chapters ON stories.chapter_id = chapters.id
 -- WHERE users.email = $1;
 
-SELECT stories.story_title, stories.description, stories.category, stories.genre, stories.age_rating, chapters.title as chapter_title, chapters.body
-FROM stories
-JOIN chapters ON stories.chapter_id = chapters.id
-WHERE stories.id = $1
+-- SELECT stories.story_title, stories.description, stories.category, stories.genre, stories.age_rating, chapters.title as chapter_title, chapters.body
+-- FROM stories
+-- JOIN chapters ON stories.chapter_id = chapters.id
+-- WHERE stories.id = $1
+
+SELECT stories.*, TO_CHAR(stories.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date, chapters.published FROM stories
+  JOIN users ON stories.author_id = users.id
+  JOIN chapters ON stories.chapter_id = chapters.id
+  WHERE users.email = 'blood.is.life@vamp.com'

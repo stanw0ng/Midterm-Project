@@ -12,6 +12,7 @@ router.get("/", (req, res) => {
     .then(data => {
       const [allStories, myStories] = data;
       const templateVars = { allStories, myStories, userName: req.session.userName };
+      console.log(templateVars)
       return res.render("read_index", templateVars);
     })
     .catch(err => {

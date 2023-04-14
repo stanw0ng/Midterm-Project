@@ -44,6 +44,12 @@
           </select>
         </div>
         <%- include('partials/_text_editor', { body: "" }) %>
+        <div id="success" class="hidden notification">
+
+        </div>
+        <div id="fail" class="hidden notification">
+
+        </div>
           <footer>
             <div>
               <p>Letter count: <span id="letter-counter">0</span></p>
@@ -55,12 +61,6 @@
               <button id="discard-story">Discard</button>
             </div>
           </footer>
-          <div id="success" class="hidden notification">
-
-          </div>
-          <div id="fail" class="hidden notification">
-
-          </div>
 
       </form>
 

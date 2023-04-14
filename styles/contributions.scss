@@ -28,8 +28,8 @@
 }
 
 .contribution:hover {
-  color: $link-highlighted;
-  border: 1px solid $link-highlighted;
+  color: variables.$link-highlighted;
+  border: 1px solid variables.$link-highlighted;
   cursor: pointer;
 }
 

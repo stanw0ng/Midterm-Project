@@ -1,3 +1,5 @@
+@use 'variables';
+
 #story-editor {
   display: flex;
   flex-direction: column;
@@ -97,10 +99,21 @@ button {
   text-decoration: underline;
 }
 
+.notification {
+  margin: 1.5em;
+  padding: 1.5em;
+  text-align: center;
+  font-size: 24px;
+}
+
 #success {
-  background-color: lightgreen;
+  background-color: #5B8;
+  color: #142;
+  border: 2px dotted #142;
 }
 #fail {
-  background-color: lightpink;
+  background-color: #B85;
+  color: #612;
+  border: 2px dotted #612;
 }
 

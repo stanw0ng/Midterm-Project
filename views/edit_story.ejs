@@ -1,4 +1,4 @@
-<%- include('partials/_header', {title: "Edit Story - Open Book", userName }); %>
+<%- include('partials/_header', {title: "Edit Story - Open Book" , userName }); %>
   <main id="story-editor">
     <h2>Edit Story</h2>
 
@@ -41,10 +41,16 @@
       <label for="chapterTitle">Chapter Title</label>
       <input type="text" name="chapterTitle" value="<%= story.chapter_title %>">
       <%- include('partials/_text_editor', { body: story.body }) %>
-        <div>
-          <button id="update-story">Update</button>
-          <button id="discard-changes">Discard Changes</button>
-        </div>
+        <footer>
+          <div>
+            <p>Letter count: <span id="letter-counter">0</span></p>
+            <p>Word count: <span id="word-counter">0</span></p>
+          </div>
+          <div>
+            <button id="update-story">Update</button>
+            <button id="discard-changes">Discard Changes</button>
+          </div>
+        </footer>
         <div id="success" class="hidden notification">
 
         </div>
@@ -55,6 +61,7 @@
     </form>
 
   </main>
+  <script type="text/javascript" src="/scripts/stats.js"></script>
   <script>
     $(document).ready(function() {
 

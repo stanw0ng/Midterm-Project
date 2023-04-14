@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: flex-start;
   color: variables.$text-normal;
-  height: calc(100vh-6em);
+  max-height: 100vh"-"6em;
   overflow-y: scroll;
 }
 
@@ -23,6 +23,8 @@
 }
 
 .my-stories {
+  gap: 1em;
+  display: flex;
   background-color: variables.$background-dark;
 }
 

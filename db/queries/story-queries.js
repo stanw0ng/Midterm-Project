@@ -1,7 +1,7 @@
 const db = require('../connection');
 
 // fetches all stories
-const getStories = (limit = 10) => {
+const getStories = () => {
   return db.query(`
   SELECT stories.story_title, stories.id, TO_CHAR(stories.date_created, 'FMMM/DD/YY, HH:MI:SS') AS publish_date,
   stories.description, stories.category, stories.genre, stories.age_rating, stories.completed, users.name
@@ -9,8 +9,7 @@ const getStories = (limit = 10) => {
   JOIN users ON users.id = stories.author_id
   JOIN chapters ON stories.chapter_id = chapters.id
   WHERE chapters.published IS TRUE
-  ORDER BY date_created DESC LIMIT $1;
-  `, [limit])
+  ORDER BY date_created DESC`)
     .then(user => {
       return user.rows;
     })

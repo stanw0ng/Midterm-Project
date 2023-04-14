@@ -46,8 +46,8 @@ router.get("/:id", (req, res) => {
 
 });
 
-router.post("/delete/", (req, res) => {
-  const { entry_id } = req.body;
+router.post("/delete/:id", (req, res) => {
+  const entry_id = req.params.id;
 
   contributionQueries.deleteContribution(entry_id)
     .then(() => {

@@ -119,8 +119,8 @@ const updateContribution = (contributionID, chapter) => {
     });
 };
 
-const deleteContribution = (draft_id) => {
-  return db.query(`DELETE FROM contributions WHERE id = $1`, [draft_id])
+const deleteContribution = (contribution_id) => {
+  return db.query(`DELETE FROM contributions WHERE id = $1`, [contribution_id])
     .then(() => {
       return true;
     })

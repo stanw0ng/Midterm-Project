@@ -3,7 +3,9 @@
 <div class = 'container'>
   <section class = 'all-stories third'>
     <h1>All Stories</h1>
-
+    <% if(!allStories.length) { %>
+      <p>There don't seem to be any stories in our database. You can be our first author!</p>
+    <% }; %>
       <div class="card-box">
       <% allStories.forEach(story => { %>
         <div class = "story-card">
@@ -26,7 +28,9 @@
   </section>
   <section class = 'my-stories third'>
     <h1>My Stories</h1>
-
+    <% if(!myStories.length) { %>
+      <p>You don't have any stories yet. <a href="/write">Write</a> one!</p>
+    <% }; %>
     <div class="card-box" id="my-stories-cards">
       <% myStories.forEach(story => { %>
         <div class="story-card">
@@ -84,6 +88,9 @@
 
   <section class = 'my-contributions third'>
     <h1>My Contributions</h1>
+    <% if(!myContributions.length) { %>
+      <p>You haven't contributed to any stories yet.</p>
+    <% }; %>
       <div class ="contribution-box">
         <% myContributions.forEach(contribution => { %>
           <div class = "contribution-card">

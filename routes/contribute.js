@@ -12,15 +12,28 @@ router.use((req, res, next) => {
 });
 
 router.get('/:id', (req, res) => {
-  contributeQueries.getLatestWinnerData(req.params.id)
-    .then(templateVars => {
-      templateVars.userName = req.session.userName;
-      res.render('new_contribution', templateVars);
-    });
+
+    const storyID = req.params.id;
+
+    const getWinnerDataPromise = contributeQueries.getLatestWinnerData(storyID);
+    const getStoryInfoPromise = contributeQueries.getStoryData(storyID);
+
+    Promise.all([getWinnerDataPromise, getStoryInfoPromise])
+    .then(data => {
+      const [winnerInfo, storyInfo] = data;
+
+      let lastChapter = winnerInfo;
+      const templateVars = { userName: req.session.userName, lastChapter, storyInfo };
+      console.log(templateVars);
+      return res.render('new_contribution', templateVars);
+      })
+      .catch(err => {
+        console.log(err);
+        res.render('error_page', { message: "Something went wrong.", userName: req.session.userName });
+      });
 });
 
 router.get('/edit/:id', (req, res) => {
-
   const contributionID = req.params.id;
 
   const getChapterInfoPromise = contributeQueries.getChapterData(contributionID);
@@ -38,6 +51,7 @@ router.get('/edit/:id', (req, res) => {
       console.log(err);
       res.render('error_page', { message: "Something went wrong.", userName: req.session.userName });
     });
+
 });
 
 router.post('/edit/:id', (req, res) => {
@@ -63,7 +77,8 @@ router.post('/edit/:id', (req, res) => {
 router.post('/:storyID/:winner/:draftID/:publish', (req, res) => {
 
   const data = req.body;
-  const publish = Boolean(req.params.publish);
+  const winnerID = req.params.winner === "null" ? null : Number(req.params.winner);
+  const publish = req.params.publish === "false" ? false : true;
   const draftID = req.params.draftID === "null" ? null : Number(req.params.draftID);
 
   const contribution = {

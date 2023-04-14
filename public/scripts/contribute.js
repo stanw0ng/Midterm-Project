@@ -1,3 +1,5 @@
+let id = null;
+
 $(document).ready(function() {
   const $draft = $('#draft');
   const address = $draft.attr('action');
@@ -29,12 +31,12 @@ $(document).ready(function() {
 
   $('#save-story').on('click', function() {
     $notifications.slideUp();
-    saveContribution(address, $draft, $success, $fail);
+    saveContribution(address, $draft, $success, $fail, id);
   });
 
   $('#publish').on('click', function() {
     $notifications.slideUp();
-    saveContribution(address, $draft, $success, $fail, true);
+    saveContribution(address, $draft, $success, $fail, id, true);
   });
 
   $('#discard-story').on('click', function() {
@@ -53,15 +55,16 @@ $(document).ready(function() {
 /**
  * Handles the post request for saving and publishing new story
  */
-const saveContribution = function(address, draft, success, fail, publish = false) {
+const saveContribution = function(address, draft, success, fail, draftID, publish = false) {
   const body = draft.serialize();
-  $.post(address + publish, body, function(data, status) {
+  $.post(`${address}/${draftID}/${publish}/`, body, function(data, status) {
     if (data) {
+      id = data;
       if (publish) {
         window.location.href = "/read";
         return;
       }
-      success.html(data).slideDown();
+      success.html("Draft saved").slideDown();
       return;
     }
     fail.html('Something went wrong with saving your contribution. We apologize for the inconvenience.').slideDown();

@@ -1,7 +1,7 @@
 <%- include('partials/_header', {title: "Write Contribution - Story Maker" }); %>
   <main id="story-editor">
     <h2>New Contribution</h2>
-    <form method="POST" id="draft" action="/contribute/<%= id %>/<%= lastWinnerID %>/">
+    <form method="POST" id="draft" action="/contribute/<%= id %>/<%= lastWinnerID %>">
       <div>
         <h2 id="story-title">Story: <%= storyTitle %>
         </h2>

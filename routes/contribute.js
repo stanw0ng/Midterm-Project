@@ -60,37 +60,34 @@ router.post('/edit/:id', (req, res) => {
     });
 });
 
-router.post('/:id/:winner/:publish', (req, res) => {
+router.post('/:storyID/:winner/:draftID/:publish', (req, res) => {
 
   const data = req.body;
   const publish = Boolean(req.params.publish);
-
-  console.log(req.params.id, req.params.winner);
+  const draftID = req.params.draftID === "null" ? null : Number(req.params.draftID);
 
   const contribution = {
-    storyID: req.params.id,
+    storyID: req.params.storyID,
     contributorEmail: req.session.userID,
     title: data.chapterTitle,
     body: data.chapterText,
     published: publish
   };
 
-  if (!req.session.draftId) {
+  if (!draftID) {
     return contributeQueries.createNewContribution(contribution)
       .then(id => {
-        req.session.draftId = id;
-        res.send(`Contribution saved`);
+        res.send(String(id));
       })
       .catch((err) => {
         res.send(false);
       });
   }
-  contributeQueries.saveContributionDraft(req.session.draftId, contribution)
+  contributeQueries.saveContributionDraft(draftID, contribution)
     .then(() => {
-      return res.send(`Contribution updated`);
+      return res.send(String(draftID));
     })
     .catch(err => {
-      req.session.draftId = null;
       console.log(err);
       res.send(false);
     });

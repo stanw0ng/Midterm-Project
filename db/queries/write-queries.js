@@ -11,10 +11,7 @@ const insertNewChapter = (chapter) => {
 };
 
 const updateStoryChapter = (draft_id, chapter) => {
-  return db.query(`UPDATE chapters SET (title, body, published) = ($1, $2, $3) WHERE id = (SELECT chapter_id FROM stories WHERE id = $4);`, [chapter.title, chapter.body, chapter.published, draft_id])
-    .then(() => {
-      return true;
-    });
+  return db.query(`UPDATE chapters SET (title, body, published) = ($1, $2, $3) WHERE id = (SELECT chapter_id FROM stories WHERE id = $4) RETURNING id;`, [chapter.title, chapter.body, chapter.published, draft_id]);
 };
 
 const insertNewStory = (authorID, chapterID, story) => {

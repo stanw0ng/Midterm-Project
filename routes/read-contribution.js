@@ -24,7 +24,7 @@ router.get("/:id", (req, res) => {
         upvotes.push(c.contribution_id);
       });
 
-      const upvoted = !upvotes.includes(contributionId);
+      const upvoted = upvotes.includes(Number(contributionId));
 
       const templateVars = chapter;
       templateVars.id = contributionId;

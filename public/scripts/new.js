@@ -1,3 +1,5 @@
+let id = null;
+
 $(document).ready(function() {
   const $title = $('#story-title');
   updateTitle($title.val());
@@ -9,6 +11,7 @@ $(document).ready(function() {
   const $success = $('#success');
   const $fail = $('#fail');
 
+
   $('input').keydown(function(event) {
     if (event.keyCode == 13) {
       event.preventDefault();
@@ -16,7 +19,7 @@ $(document).ready(function() {
     }
   });
 
-  $(document).submit(function() {
+  $(document).submit(function(event) {
     event.preventDefault();
   });
 
@@ -25,13 +28,14 @@ $(document).ready(function() {
   });
 
   $('#save-story').on('click', function() {
+    console.log(id);
     $notifications.slideUp();
-    saveStory($success, $fail);
+    saveStory($success, $fail, id);
   });
 
   $('#publish').on('click', function() {
     $notifications.slideUp();
-    saveStory($success, $fail, true);
+    saveStory($success, $fail, id, true);
   });
 
   $('#discard-story').on('click', function() {
@@ -60,15 +64,17 @@ const updateTitle = function(title) {
 /**
  * Handles the post request for saving and publishing new story
  */
-const saveStory = function(success, fail, publish = false) {
+const saveStory = function(success, fail, draftID, publish = false) {
   const body = $('#draft').serialize();
-  $.post(`/story/save/${publish}`, body, function(data, status) {
+  const address = `/story/save/${draftID}/${publish}/`;
+  $.post(address, body, function(data, status) {
     if (data) {
+      id = data;
       if (publish) {
         window.location.href = "/read";
         return;
       }
-      success.html(data).slideDown();
+      success.html("Draft saved").slideDown();
       return;
     }
     fail.html('Something went wrong with saving your new story. We apologize for the inconvenience.').slideDown();

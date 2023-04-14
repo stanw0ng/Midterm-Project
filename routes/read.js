@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).send("Error retrieving stories");
+      res.status(500).render('error_page', { message: err, userName: req.session.userName })
     });
 });
 
@@ -31,23 +31,25 @@ router.get("/:storyId", (req, res) => {
     .then(data => {
       const [rootChapter, childrenChapters] = data;
       const templateVars = { rootChapter, childrenChapters, userName: req.session.userName };
-      console.log(templateVars)
+      if(!rootChapter){
+        throw new Error("Unable to find story ID");
+      }
       return res.render('read', templateVars);
     })
     .catch(err => {
       console.error(err);
-      res.status(500).send("Error retrieving stories");
+      res.status(404).render('error_page', { message: err, userName: req.session.userName })
     });
-});
+  });
 
-// renders page for chapters
-router.get("/:storyId/chapter/:contributionId", (req, res) => {
-  const storyId = req.params.storyId;
-  const contributionId = req.params.contributionId;
-  const getRootChapterPromise = storyQueries.getChapterData(contributionId);
-  const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyId);
+  // renders page for chapters
+  router.get("/:storyId/chapter/:contributionId", (req, res) => {
+    const storyId = req.params.storyId;
+    const contributionId = req.params.contributionId;
+    const getRootChapterPromise = storyQueries.getChapterData(contributionId);
+    const getChildrenChaptersPromise = storyQueries.getChildrenChapters(storyId);
 
-  Promise.all([getRootChapterPromise, getChildrenChaptersPromise])
+    Promise.all([getRootChapterPromise, getChildrenChaptersPromise])
     .then(data => {
       const [rootChapter, childrenChapters] = data;
       const templateVars = { rootChapter, childrenChapters, userName: req.session.userName };
@@ -55,7 +57,7 @@ router.get("/:storyId/chapter/:contributionId", (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).send("Error retrieving stories");
+      res.status(404).render('error_page', { message: err, userName: req.session.userName })
     });
 });
 
@@ -88,7 +90,7 @@ router.get("/:storyId/contributions", (req, res) => {
   })
   .catch(err => {
     console.error(err);
-    res.status(500).send("Error retrieving contributions");
+    res.status(404).render('error_page', { message: err, userName: req.session.userName })
   });
 });
 

@@ -134,6 +134,13 @@
 -- JOIN chapters ON stories.chapter_id = chapters.id
 -- WHERE stories.id = $1
 
-  SELECT winners.child_id
-  FROM winners
-  WHERE story_id = 1
+-- SELECT winners.child_id, chapters.title
+--   FROM winners
+--   JOIN contributions ON winners.child_id = contributions.id
+--   JOIN chapters ON contributions.chapter_id = chapters.id
+--   WHERE winners.story_id = 1
+
+-- SELECT chapters.title, chapters.body
+-- FROM contributions
+-- JOIN chapters ON chapters.id = contributions.chapter_id
+-- WHERE chapters.published = FALSE AND contributions.contributor_id =

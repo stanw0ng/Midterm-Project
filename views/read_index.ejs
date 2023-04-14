@@ -1,7 +1,7 @@
 <%- include('partials/_header', {title: "Read Stories - Open Book"}); %>
 
 <div class = 'container'>
-  <section class = 'all-stories half'>
+  <section class = 'all-stories third'>
     <h1>All Stories</h1>
 
       <div class="card-box">
@@ -24,7 +24,7 @@
 
       </div>
   </section>
-  <section class = 'my-stories half'>
+  <section class = 'my-stories third'>
     <h1>My Stories</h1>
 
     <div class="card-box" id="my-stories-cards">
@@ -36,7 +36,7 @@
         </h2>
         <h4 class = 'published date'>Published : <%= story.publish_date %></h4>
         </div>
-        <ul class = "methods">
+        <ul>
           <li><a href="/read/<%= story.id %>">Read</a></li>
           <li><a href="/manage/edit/<%= story.id %>">Edit</a></li>
           <li>
@@ -79,6 +79,26 @@
       </ul>
         </div>
       <% }); %>
+      </div>
+  </section>
+
+  <section class = 'my-contributions third'>
+    <h1>My Contributions</h1>
+      <div class ="contribution-box">
+        <% myContributions.forEach(contribution => { %>
+          <div class = "contribution-card">
+            <h3><%= contribution.title %><h3>
+              <ul class = "methods">
+                <li><a href="/contribution/<%= contribution.contribution_id %>">Read</a></li>
+                <li><a href="/contribute/edit/<%= contribution.contribution_id %>">Edit</a></li>
+                <li>
+                  <form method="POST" action="/delete/<%= contribution.contribution_id %>">
+                    <button type="submit" class="danger">Delete</button>
+                  </form>
+                </li>
+              </ul>
+          </div>
+        <% }); %>
       </div>
   </section>
 </div>

@@ -5,10 +5,10 @@
   flex-grow: 1;
 }
 
-.half {
+.third {
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  width: 33.33vw;
   align-items: center;
   justify-content: center;
   color: variables.$text-normal;
@@ -82,4 +82,43 @@ justify-content: space-between;
   li {
     list-style-type: none;
   }
+}
+
+.my-contributions {
+  display: flex;
+  flex-direction: column;
+}
+
+.contribution-box{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  align-items: center;
+  gap: 1em;
+}
+
+.contribution-card{
+  display: flex;
+  align-items: center;
+  border: 1px;
+  border: 1px solid;
+  padding: 0 1.5em;
+  width: 100%;
+  justify-content: center;
+}
+
+.contribution-card li {
+    list-style-type: none;
+  }
+
+  .contribution-card a {
+    font-size: 1.5em;
+  }
+
+.methods {
+  display: flex;
+  flex-direction: column;
+  font-size: 1em;
+  align-items: center;
+  gap: .5em;
 }

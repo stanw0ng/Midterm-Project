@@ -79,7 +79,7 @@ const getMyContributions = (userEmail) => {
     .then(user => {
       userID = user.id;
       return db.query(`
-      SELECT chapters.*
+      SELECT chapters.*, contributions.id AS contribution_id
       FROM contributions
       JOIN chapters ON chapters.id = contributions.chapter_id
       WHERE contributions.contributor_id = $1

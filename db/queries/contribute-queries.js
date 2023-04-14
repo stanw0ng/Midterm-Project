@@ -28,25 +28,31 @@ const linkChapterRelationship = (story, parent, child) => {
     });
 };
 
+const getStoryData = (storyID => {
+  return db.query(`SELECT stories.id, stories.story_title, author.name as author_name, chapters.title as chapter_title
+  FROM stories
+  JOIN users author ON stories.author_id = author.id
+  JOIN chapters ON stories.chapter_id = chapters.id
+  WHERE stories.id = $1`, [storyID])
+  .then(data => {
+    return data.rows[0];
+  });
+});
+
 const getLatestWinnerData = (storyID) => {
   const output = {
     id: storyID
   };
-  return db.query(`SELECT contributions.id as winner_id, contributor.name as contributor_name, chapters.title as chapter_title, stories.story_title, author.name as author
+  return db.query(`SELECT contributions.id as winner_id, contributor.name as contributor_name, chapters.title as chapter_title
   FROM contributions
   JOIN users contributor ON contributions.contributor_id = contributor.id
   JOIN chapters ON contributions.chapter_id = chapters.id
-  JOIN stories ON contributions.story_id = stories.id
-  JOIN users author ON stories.author_id = author.id
   WHERE contributions.id = (SELECT child_id FROM winners WHERE story_id = $1 ORDER BY child_id DESC LIMIT 1);`, [storyID])
     .then(result => {
-      const data = result.rows[0];
-      output.storyTitle = data.story_title,
-        output.storyAuthor = data.author,
-        output.lastWinnerID = data.winner_id,
-        output.lastWinner = data.chapter_title,
-        output.winnerAuthor = data.contributor_name;
-      return output;
+      if (!result.rows.length) {
+        return null;
+      }
+      return result.rows[0];
     });
 };
 
@@ -125,4 +131,4 @@ const deleteContribution = (draft_id) => {
     });
 };
 
-module.exports = { createNewContribution, saveContributionDraft, deleteContribution, getLatestWinnerData, getChapterData, updateContribution };
+module.exports = { createNewContribution, saveContributionDraft, deleteContribution, getLatestWinnerData, getChapterData, updateContribution, getStoryData };
